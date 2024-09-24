@@ -22,6 +22,7 @@ class Period(db.Model, SerializerMixin):
     end_date = db.Column(db.Date)
 
     symptoms = db.relationship('Symptom', secondary='periodsymptoms', back_populates='periods')
+    user = db.relationship('User', back_populates='periods')
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
