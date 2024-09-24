@@ -49,9 +49,3 @@ class PeriodSymptom(db.Model, SerializerMixin):
 
     period_id = db.Column(db.Integer, db.ForeignKey('periods.id'))
     symptom_id = db.Column(db.Integer, db.ForeignKey('symptoms.id'))
-
-
-# Import your models as needed in other modules, i.e. from models import ....
-
-# Remember to regularly run flask db revision --autogenerate -m'<descriptive message>', replacing <descriptive message> with an appropriate message, and flask db upgrade head to track your modifications to the database and create checkpoints in case you ever need to roll those modifications back.
-

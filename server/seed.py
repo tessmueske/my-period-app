@@ -5,7 +5,7 @@ import datetime
 
 from faker import Faker
 from app import app
-from models import db, User, Period, Symptom, PeriodSymptom  # Ensure User is imported
+from models import db, User, Period, Symptom, PeriodSymptom  
 
 if __name__ == '__main__':
     fake = Faker()
@@ -46,7 +46,7 @@ if __name__ == '__main__':
             PeriodSymptom(severity='Moderate', notes='Some nausea', period_id=periods[1].id, symptom_id=symptoms[1].id),
             PeriodSymptom(severity='Severe', notes='Terrible headache', period_id=periods[2].id, symptom_id=symptoms[2].id),
         ]
-        
+
         db.session.bulk_save_objects(period_symptoms)
         db.session.commit()
 

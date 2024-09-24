@@ -9,6 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 
 # Local imports
+from models import db, User, Period, Symptom, PeriodSymptom  
 
 # Instantiate app, set attributes
 app = Flask(__name__)
