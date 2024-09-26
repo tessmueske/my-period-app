@@ -36,10 +36,9 @@ User Stories:
 
 As a user, I can add period entries.
 I can add symptoms to each period.
-I can edit or delete the symptoms as well as the periods.
-I can retrieve a list of all of my symptoms.
+I can edit or delete the symptoms and periods.
 I can retrieve a list of all of my periods and all of their symptoms (perhaps to see how it changes over time).
-I can filter by a symptom to see its prevalence (how many periods it is associated with).
+
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -62,12 +61,31 @@ Components:
 - This is where a user can add, edit, or delete a symptom from a period.
 - This is where a user can filter by symptom to see its prevalence.
 
+5. More components
+
 --> filter? search bar? these should all maybe do a lot less and i should have more components overall
 --> wireframe?
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+<!-- This README should serve as a template for your own- go through the important files in your project and describe what they do. Each file that you edit (you can ignore your migration files) should get at least a paragraph. Each function should get a small blurb.
+
+You should descibe your application first, and with a good level of detail. The rest should be ordered by importance to the user. (Probably routes next, then models.)
+
+Screenshots and links to resources that you used throughout are also useful to users and collaborators, but a little more syntactically complicated. Only add these in if you're feeling comfortable with Markdown. -->
+
+HOW TO EMIT LESS CARBON EMISSIONS?
+I chose black as the backgroup color for my project because it emits the least amount of carbon. Other choices for colors were also made with this research in mind. (olive green, burnt orange)
+
+Source: 
+https://consider.digital/low-carbon-web-colour-palettes/
+
+HOW TO MAKE THE APP MORE ACCESSIBLE?
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Potential future expansions:
+Filter by a symptom to see its prevalence (how many periods it is associated with)
 Recommend Doctors
 Surgery Information
 Sex Education (STIs, contraception, etc)
@@ -76,3 +94,4 @@ Meeting friends function
 Dating function
 Hookup function
 Message/Chat groups (think Lex groups, Reddit threads)
+
