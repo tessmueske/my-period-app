@@ -22,6 +22,8 @@ function App() {
       <AddSymptom /> 
       {/* viewing all periods, has calendar scroll function */}
       <ViewAllPeriods /> 
+      {/* calendar that shows all periods */}
+      <PeriodCalendar />
       {/* once a period is selected, options here */}
       <SelectedPeriod /> 
       {/* after new period is added, landing page with new options */}

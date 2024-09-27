@@ -12,6 +12,17 @@ class User(db.Model, SerializerMixin):
 
     periods = db.relationship('Period', back_populates='user')
 
+    @hybrid_property
+    def password_hash(self):
+        raise AttributeError("Password is not a readable attribute")
+
+    @password_hash.setter
+    def password_hash(self, password):
+        self._password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(self._password_hash, password.encode("utf-8"))
+
     def __repr__(self):
         return f'<{self.id}: {self.username}>'
 
@@ -19,7 +30,7 @@ class Period(db.Model, SerializerMixin):
     __tablename__ = 'periods'
 
     id = db.Column(db.Integer, primary_key=True)
-    start_date = db.Column(db.Date)
+    start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date)
 
     symptoms = db.relationship('Symptom', secondary='periodsymptoms', back_populates='periods')
