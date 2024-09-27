@@ -8,6 +8,7 @@ class User(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, nullable=False)
+    _password_hash = db.Column(db.String)
 
     periods = db.relationship('Period', back_populates='user')
 
