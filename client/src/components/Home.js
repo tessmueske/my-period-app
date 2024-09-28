@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import '../index.css'; 
 
 function Home() {
     return (
         <>
-            <h1>welcome to Crimson, an app for all people who menstruate</h1>
+            <h2>welcome to Crimson, </h2>
+            <h2>an app for all people who menstruate</h2><br></br>
             <Link to="/login">log in</Link><br></br>
             <Link to="/signup">sign up</Link><br></br>
             <Link to="/about">about us</Link><br></br>
