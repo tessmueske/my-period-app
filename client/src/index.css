@@ -25,6 +25,21 @@ body {
   padding: 20px; 
 }
 
+.button {
+  display: inline-block; 
+    padding: 5px 10px;
+    margin: 7px 0; 
+    background-color: rgb(236, 136, 136); 
+    color: #ecd5d5;
+    text-decoration: none; 
+    border-radius: 5px; 
+    transition: background-color 0.3s; 
+}
+
+.button:hover {
+    background-color: #b64545; 
+}
+
 h2 {
   line-height: 1.2; 
   margin: 0; 
