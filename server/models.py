@@ -38,6 +38,10 @@ class Period(db.Model, SerializerMixin):
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
+    def validate_dates(self):
+        if self.start_date > self.end_date:
+            raise ValueError("Start date must be before end date")
+
     def __repr__(self):
         return f'Period <{self.id}: {self.start_date} through {self.end_date}>'
 
@@ -45,9 +49,14 @@ class Symptom(db.Model, SerializerMixin):
     __tablename__ = 'symptoms'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
+    name = db.Column(db.String, nullable=False)
+    severity = db.Column(db.Integer)
 
     periods = db.relationship('Period', secondary='periodsymptoms', back_populates='symptoms')
+
+    def validate_severity(self):
+        if self.severity not in [1, 2, 3, 4, 5]:
+            raise ValueError("Severity must be 1-5")
 
     def __repr__(self):
         return f'Symptom <{self.id}: {self.name}>'

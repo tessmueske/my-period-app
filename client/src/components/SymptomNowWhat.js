@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-function SelectedPeriod(){
+function SymptomNowWhat(){
     return(
         <div></div>
     )
 }
 
-export default SelectedPeriod;
+export default SymptomNowWhat;
