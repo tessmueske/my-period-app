@@ -19,23 +19,23 @@ import './index.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<Home />} />
-            <Route path="homepage" element={<Homepage />} />
-            <Route path="period/new" element={<AddPeriod />} />
-            <Route path="symptom/new" element={<AddSymptom />} />
-            <Route path="period_success" element={<PeriodNowWhat />} />
-            <Route path="symptom_success" element={<SymptomNowWhat />} />
-            <Route path="selected_period" element={<SelectedPeriod />} />
-            <Route path="all/periods" element={<ViewAllPeriods />} />
-        </Route>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<App />}>
+        <Route index element={<Home />} />
+        <Route path="homepage" element={<Homepage />} />
+        <Route path="period/new" element={<AddPeriod />} />
+        <Route path="symptom/new" element={<AddSymptom />} />
+        <Route path="period_success" element={<PeriodNowWhat />} />
+        <Route path="symptom_success" element={<SymptomNowWhat />} />
+        <Route path="selected_period" element={<SelectedPeriod />} />
+        <Route path="all/periods" element={<ViewAllPeriods />} />
+      </Route>
 
-        <Route path="about" element={<About />} />
-        <Route path="login" element={<Login />} />
-        <Route path="signup" element={<Signup />} />
-        <Route path="logout" element={<Logout />} />
-      </Routes>
-    </BrowserRouter>
+      <Route path="/about" element={<About />} />
+      <Route path="/login" element={<Login />} /> 
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/logout" element={<Logout />} />
+    </Routes>
+  </BrowserRouter>
 );

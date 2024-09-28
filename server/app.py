@@ -12,6 +12,7 @@ from models import db, User, Period, Symptom, PeriodSymptom
 
 class Signup(Resource):
     def post(self):
+
         data = request.get_json()
 
         username = data.get('username')
@@ -30,6 +31,7 @@ class Signup(Resource):
 
 class Login(Resource):
     def post(self):
+
         data = request.get_json()
         username = data.get('username')
         password = data.get('password')
@@ -63,6 +65,7 @@ class CheckSession(Resource):
 
 class Periods(Resource):
     def get(self):
+
         if 'user_id' not in session or session['user_id'] is None:
             return {'error': 'Unauthorized'}, 401
 
@@ -121,7 +124,6 @@ api.add_resource(Logout, '/logout', endpoint='logout')
 # app.py is your Flask application. You'll want to use Flask to build a simple API backend like we have in previous modules. You should use Flask-RESTful for your routes. You should be familiar with models.py and seed.py by now, but remember that you will need to use Flask-SQLAlchemy, Flask-Migrate, and SQLAlchemy-Serializer instead of SQLAlchemy and Alembic in your models.
 
 #build out routes in flask-restful -- authentication, IAM, server-comms
-
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

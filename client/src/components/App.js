@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom"; 
 import Home from "./Home";
 import NavBar from "./NavBar";
+import Login from "./Login";
 import '../index.css'; 
 
 function App() {
@@ -17,10 +18,12 @@ function App() {
 
   return (
     <>
+      {user && <NavBar />}
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-        </Routes>
+          <Route path="/login" element={<Login onLogin={setUser} />} />
+        </Routes> 
       </main>
     </>
   );

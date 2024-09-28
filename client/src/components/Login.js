@@ -1,9 +1,97 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function Login(){
-    return(
-        <div></div>
-    )
-}
+function Login({ onLogin }){
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [emailError, setEmailError] = useState('')
+    const [passwordError, setPasswordError] = useState('')
+    const [isLoading, setIsLoading] = useState(false); 
+    const [errors, setErrors] = useState([]);
 
-export default Login;
+    const navigate = useNavigate();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setIsLoading(true);
+    fetch("/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      }).then((r) => {
+        setIsLoading(false);
+        if (r.ok) {
+          r.json().then((user) => onLogin(user)); 
+        } else {
+          r.json().then((err) => setErrors(err.errors || ["invalid login"])); 
+        }
+      });
+    }
+
+    const onButtonClick = () => {
+        setEmailError('');
+        setPasswordError('');
+        setErrors([]); 
+        if ('' === email) {
+            setEmailError('please enter your email')
+            return
+        }
+        
+        if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+            setEmailError('please enter a valid email')
+            return
+        }
+        
+        if ('' === password) {
+            setPasswordError('please enter a password')
+            return
+        }
+
+        handleSubmit();
+    };
+
+    const handleBack = () => {
+        navigate('/'); 
+      };
+
+    return (
+        <div className="mainContainer">
+          <div className="titleContainer">
+            <div>log in</div>
+          </div>
+          <br />
+          <div className="inputContainer">
+            <input
+              value={email}
+              placeholder="email"
+              onChange={(e) => setEmail(e.target.value)}
+              className="inputBox"
+            />
+            <label className="errorLabel">{emailError}</label>
+          </div>
+          <br />
+          <div className="inputContainer">
+            <input
+              value={password}
+              placeholder="password"
+              onChange={(e) => setPassword(e.target.value)}
+              className="inputBox"
+            />
+            <label className="errorLabel">{passwordError}</label>
+          </div>
+          <br />
+          <div className="inputContainer">
+            <button className="button" onClick={onButtonClick}>
+              log in
+            </button>
+          </div>
+          <div className="inputContainer">
+        <button className="button" onClick={handleBack}>back</button>
+      </div>
+        </div>
+      );
+    }
+    
+    export default Login;
