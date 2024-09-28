@@ -1,9 +1,15 @@
 import React, { useState } from "react";
+import '../index.css'; 
 
 function About(){
     return(
         <div>
-        <h2>crimson is a project built by tess mueske in the fall of 2024. it’s a menstruation tracking app for people of all genders who bleed.</h2>
+            <p>
+                Crimson is a project built by Tess Mueske in the fall of 2024 for Flatiron School.
+            </p>
+            <p>
+                it’s a menstruation tracking app for people of all genders who bleed.
+            </p>
         </div>
     )
 }
