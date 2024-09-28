@@ -1,16 +1,13 @@
-import React, { useState } from "react";
-import Login from "./Login"
-import Signup from "./Signup"
-import About from "./About"
-
+import React from "react";
+import { Link } from "react-router-dom";
 
 function Home() {
     return (
         <>
-        <h1>welcome to crimson, an app for all people who menstruate</h1>
-        <h2> log in here</h2><Login />
-        <h2> sign up here</h2><Signup />
-        <h2> about us </h2><About />
+            <h1>welcome to Crimson, an app for all people who menstruate</h1>
+            <Link to="/login">log in</Link><br></br>
+            <Link to="/signup">sign up</Link><br></br>
+            <Link to="/about">about us</Link><br></br>
         </>
     );
 }

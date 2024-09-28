@@ -23,20 +23,21 @@ root.render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route element={<NavBar />}>
-            <Route index element={<Home />} /> 
+            <Route index element={<Home />} />
             <Route path="homepage" element={<Homepage />} />
-            <Route path="add_period" element={<AddPeriod />} />
-            <Route path="add_symptom" element={<AddSymptom />} />
-            <Route path="period_now_what" element={<PeriodNowWhat />} />
-            <Route path="symptom_now_what" element={<SymptomNowWhat />} />
+            <Route path="period/new" element={<AddPeriod />} />
+            <Route path="symptom/new" element={<AddSymptom />} />
+            <Route path="period_success" element={<PeriodNowWhat />} />
+            <Route path="symptom_success" element={<SymptomNowWhat />} />
             <Route path="selected_period" element={<SelectedPeriod />} />
-            <Route path="view_all_periods" element={<ViewAllPeriods />} />
+            <Route path="all/periods" element={<ViewAllPeriods />} />
           </Route>
-          <Route path="about" element={<About />} />
-          <Route path="login" element={<Login />} />
-          <Route path="signup" element={<Signup />} />
-          <Route path="logout" element={<Logout />} />
         </Route>
+  
+        <Route path="about" element={<About />} />
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="logout" element={<Logout />} />
       </Routes>
     </BrowserRouter>
   );
