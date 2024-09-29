@@ -1,6 +1,6 @@
 import React from "react";
-import ReactDOM from "react-dom/client"; 
-import App from "./components/App";
+import ReactDOM from "react-dom/client";
+import App from "./components/App"; 
 import AddPeriod from "./components/AddPeriod";
 import About from "./components/About";
 import AddSymptom from "./components/AddSymptom";
@@ -21,7 +21,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<App />}>
+      <Route path="/" element={<App />}> 
         <Route index element={<Home />} />
         <Route path="homepage" element={<Homepage />} />
         <Route path="period/new" element={<AddPeriod />} />

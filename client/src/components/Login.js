@@ -20,36 +20,43 @@ function Login({ onLogin }){
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
-      }).then((r) => {
+    })
+    .then((r) => {
         setIsLoading(false);
         if (r.ok) {
-          r.json().then((user) => onLogin(user)); 
+            r.json().then((user) => {
+              onLogin(user);
+              navigate("/homepage");
+            });
         } else {
-          r.json().then((err) => setErrors(err.errors || ["invalid login"])); 
+            r.json().then((err) => {
+                setErrors(err.errors || ["Invalid login credentials."]);
+            });
         }
-      });
-    }
+    });
+}
 
-    const onButtonClick = () => {
+    const onButtonClick = (e) => {
+        e.preventDefault();
         setEmailError('');
         setPasswordError('');
         setErrors([]); 
         if ('' === email) {
-            setEmailError('please enter your email')
+            setEmailError('*please enter your email')
             return
         }
         
         if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-            setEmailError('please enter a valid email')
+            setEmailError('*please enter a valid email')
             return
         }
         
         if ('' === password) {
-            setPasswordError('please enter a password')
+            setPasswordError('*please enter a password')
             return
         }
 
-        handleSubmit();
+        handleSubmit(e);
     };
 
     const handleBack = () => {
@@ -76,6 +83,7 @@ function Login({ onLogin }){
             <input
               value={password}
               placeholder="password"
+              type="password"
               onChange={(e) => setPassword(e.target.value)}
               className="inputBox"
             />
