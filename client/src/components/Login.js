@@ -66,7 +66,7 @@ function Login({ onLogin }){
     return (
         <div className="mainContainer">
           <div className="titleContainer">
-            <div>log in</div>
+            <div>log in to Crimson</div>
           </div>
           <br />
           <div className="inputContainer">

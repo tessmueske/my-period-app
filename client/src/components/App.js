@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import NavBar from "./NavBar";
 import Login from "./Login";
+import Signup from "./Signup";
 import '../index.css'; 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login onLogin={setUser} />} />
+          <Route path="/signup" element={<Signup onSignup={setUser} />} />
         </Routes> 
       </main>
     </>

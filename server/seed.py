@@ -16,9 +16,9 @@ if __name__ == '__main__':
         db.create_all() 
 
         users = [
-            User(username='alienboyyy'),
-            User(username='cien_rosas'),
-            User(username='lotusmoon13')
+            User(email='alienboyyy@gmail.com'),
+            User(email='cien_rosas@gmail.com'),
+            User(email='lotusmoon13@gmail.com')
         ]
         db.session.bulk_save_objects(users)
         db.session.commit()

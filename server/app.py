@@ -15,10 +15,10 @@ class Signup(Resource):
 
         data = request.get_json()
 
-        username = data.get('username')
+        email = data.get('email')
         password_hash = data.get('password')
 
-        new_user = User(username=username)
+        new_user = User(email=email)
         new_user.password_hash=password_hash
 
         try:
@@ -27,27 +27,27 @@ class Signup(Resource):
             return new_user.to_dict(), 201
 
         except Exception as e: 
-            return {"error": f"Failed to create user: {str(e)}"}, 422
+            return {"error": f"failed to create user: {str(e)}"}, 422
 
 class Login(Resource):
     def post(self):
 
         data = request.get_json()
-        username = data.get('username')
+        email = data.get('email')
         password = data.get('password')
 
-        user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(email=email).first()
 
         if user and user.authenticate(password):
             session['user_id'] = user.id
 
             return {
                 'id': user.id,
-                'username': user.username
+                'email': user.email
             }, 200
 
         else:
-            return {'error': 'Invalid username or password'}, 401
+            return {'error': 'invalid email or password'}, 401
 
 class CheckSession(Resource):
     def get(self):
