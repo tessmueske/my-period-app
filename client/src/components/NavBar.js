@@ -1,30 +1,42 @@
-import React, { useState } from "react";
-import { Outlet, Link } from "react-router-dom";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from "react";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 
-const NavBar = ({ user, setUser }) => {
-    return (
-      <>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/homepage">home</Link>
-            </li>
-            <li>
-              <Link to="/all_periods">my periods</Link>
-            </li>
-            <li>
-              <Link to="/add_period">add a period</Link>
-            </li>
-            <li>
-              <Link to="/logout">=log out</Link>
-            </li>
-          </ul>
-        </nav>
-  
-        <Outlet />
-      </>
-    )
+const NavBar = ({ setUser }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    fetch("/logout", { method: "DELETE" }).then((r) => {
+      if (r.ok) {
+        setUser(null);
+        navigate("/home");
+      }
+    });
   };
-  
-  export default NavBar;
+
+  return (
+    <>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/homepage">home</Link>
+          </li>
+          <li>
+            <Link to="/all_periods">my periods</Link>
+          </li>
+          <li>
+            <Link to="/add_period">add a period</Link>
+          </li>
+          <li>
+            <button onClick={handleLogout} style={{ border: "none", background: "none", cursor: "pointer" }}>
+              log out
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <Outlet />
+    </>
+  );
+};
+
+export default NavBar;
