@@ -5,28 +5,42 @@
 # Remote library imports
 from flask import request, session
 from flask_restful import Resource
+from werkzeug.security import generate_password_hash
 
 # Local imports
 from config import app, db, api
 from models import db, User, Period, Symptom, PeriodSymptom
 
+app.secret_key = 'my_project_123'
+
 class Signup(Resource):
     def post(self):
-
         data = request.get_json()
 
         email = data.get('email')
-        password_hash = data.get('password')
+        password = data.get('password') 
+
+        errors = []
+
+        if not email:
+            errors.append("email is required")
+        if not password: 
+            errors.append("password is required")
+        if errors:
+            return {"errors": errors}, 400 
+
+        existing_user = User.query.filter_by(email=email).first()
+        if existing_user:
+            return {"errors": ["email already exists"]}, 409
 
         new_user = User(email=email)
-        new_user.password_hash=password_hash
+        new_user.password_hash = password 
 
         try:
             db.session.add(new_user)
             db.session.commit()
             return new_user.to_dict(), 201
-
-        except Exception as e: 
+        except Exception as e:
             return {"error": f"failed to create user: {str(e)}"}, 422
 
 class Login(Resource):
@@ -120,10 +134,6 @@ api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Periods, '/all_periods', endpoint='all_periods')
 api.add_resource(Logout, '/logout', endpoint='logout')
-
-# app.py is your Flask application. You'll want to use Flask to build a simple API backend like we have in previous modules. You should use Flask-RESTful for your routes. You should be familiar with models.py and seed.py by now, but remember that you will need to use Flask-SQLAlchemy, Flask-Migrate, and SQLAlchemy-Serializer instead of SQLAlchemy and Alembic in your models.
-
-#build out routes in flask-restful -- authentication, IAM, server-comms
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

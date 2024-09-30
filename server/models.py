@@ -1,20 +1,27 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
-
-from config import db
+from sqlalchemy.ext.hybrid import hybrid_property
+import bcrypt
+from config import db, bcrypt
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False, unique=True)
     _password_hash = db.Column(db.String)
 
     periods = db.relationship('Period', back_populates='user')
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'email': self.email
+        } 
+
     @hybrid_property
     def password_hash(self):
-        raise AttributeError("Password is not a readable attribute")
+        raise AttributeError("password is not a readable attribute")
 
     @password_hash.setter
     def password_hash(self, password):
@@ -24,7 +31,7 @@ class User(db.Model, SerializerMixin):
         return bcrypt.check_password_hash(self._password_hash, password.encode("utf-8"))
 
     def __repr__(self):
-        return f'<{self.id}: {self.username}>'
+        return f'<{self.id}: {self.email}>'
 
 class Period(db.Model, SerializerMixin):
     __tablename__ = 'periods'
@@ -40,7 +47,7 @@ class Period(db.Model, SerializerMixin):
 
     def validate_dates(self):
         if self.start_date > self.end_date:
-            raise ValueError("Start date must be before end date")
+            raise ValueError("start date must be before end date")
 
     def __repr__(self):
         return f'Period <{self.id}: {self.start_date} through {self.end_date}>'
