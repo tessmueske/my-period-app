@@ -1,7 +1,7 @@
 :root {
   --bg: #282c34;
   --header: #fff;
-  --link: #61fbbb;
+  --link: #f49f9f;
   --text: hsla(0, 0%, 100%, 0.88);
 }
 
@@ -12,10 +12,61 @@ body {
   margin: 0; 
   padding: 0;
   height: 100vh; 
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-  text-align: center; 
+}
+
+nav {
+  position: fixed; 
+  top: 0;
+  width: 100%; 
+  background-color: rgb(106, 36, 36); 
+  color: var(--link); 
+  padding: 10px 0;
+  z-index: 1000; 
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+nav li {
+  display: inline;
+}
+
+nav a,
+nav button { 
+  color: var(--link);
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.3s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+nav a:hover,
+nav button:hover {
+  color: #ff8b8b; 
+}
+
+h2 {
+  line-height: 1.2;
+  margin: 0;
+}
+
+.centered-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Makes the container fill the height of the viewport */
+  text-align: center; /* Centers the text within the container */
 }
 
 .about {
@@ -25,28 +76,44 @@ body {
   padding: 20px; 
 }
 
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Makes sure the content fills the height of the viewport */
+  text-align: center; /* Centers the text inside the container */
+  max-width: 600px; /* Limits the width of the container */
+  width: 100%; /* Ensures the container takes full width of smaller screens */
+  margin: 0 auto; /* Horizontally centers the container */
+  padding: 20px;
+}
+
+.homepage-container {
+  line-height: 1.6;
+  color: #ecd5d5;
+  padding: 40px; 
+  margin: 0 auto;
+  max-width: 600px; 
+  text-align: center; 
+}
+
 .button {
   display: inline-block; 
-    padding: 5px 10px;
-    margin: 7px 0; 
-    background-color: rgb(106, 36, 36); 
-    color: #f49f9f;
-    text-decoration: none; 
-    border-radius: 5px; 
-    border: none; 
-    box-shadow: none; 
-    transition: background-color 0.3s; 
-    cursor: pointer;
-    transition: background-color 0.3s; 
+  padding: 5px 10px;
+  margin: 7px 0; 
+  background-color: rgb(106, 36, 36); 
+  color: var(--link); 
+  text-decoration: none; 
+  border-radius: 5px; 
+  border: none; 
+  box-shadow: none; 
+  transition: background-color 0.3s; 
+  cursor: pointer;
 }
 
 .button:hover {
-    background-color: #ff8b8b;
-}
-
-h2 {
-  line-height: 1.2; 
-  margin: 0; 
+  background-color: #ff8b8b;
 }
 
 a {

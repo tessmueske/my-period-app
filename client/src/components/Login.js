@@ -64,6 +64,7 @@ function Login({ onLogin }){
       };
 
     return (
+        <div className="centered-container">
         <div className="mainContainer">
           <div className="titleContainer">
             <div>log in to Crimson</div>
@@ -98,6 +99,7 @@ function Login({ onLogin }){
           <div className="inputContainer">
         <button className="button" onClick={handleBack}>back</button>
       </div>
+        </div>
         </div>
       );
     }

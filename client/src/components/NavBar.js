@@ -1,18 +1,8 @@
 import React from "react";
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
+import '../index.css'; 
 
-const NavBar = ({ setUser }) => {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    fetch("/logout", { method: "DELETE" }).then((r) => {
-      if (r.ok) {
-        setUser(null);
-        navigate("/home");
-      }
-    });
-  };
-
+const NavBar = ({ handleLogout }) => {
   return (
     <>
       <nav>
@@ -27,7 +17,7 @@ const NavBar = ({ setUser }) => {
             <Link to="/add_period">add a period</Link>
           </li>
           <li>
-            <button onClick={handleLogout} style={{ border: "none", background: "none", cursor: "pointer" }}>
+            <button onClick={handleLogout}>
               log out
             </button>
           </li>

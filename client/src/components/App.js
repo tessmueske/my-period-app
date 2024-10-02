@@ -14,9 +14,12 @@ import SymptomNowWhat from "./SymptomNowWhat";
 import SelectedPeriod from "./SelectedPeriod";
 import ViewAllPeriods from "./ViewAllPeriods";
 import '../index.css'; 
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const [user, setUser] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("/check_session").then((r) => {
@@ -25,6 +28,19 @@ function App() {
       }
     });
   }, []);
+
+  const handleLogout = () => {
+    fetch("/logout", { method: "DELETE" })
+      .then((r) => {
+        if (r.ok) {
+          setUser(null); 
+          navigate("/")
+        }
+      })
+      .catch((error) => {
+        console.error("Logout failed:", error);
+      });
+  };
 
   if (!user) return (<div>
     <Routes>
@@ -37,7 +53,7 @@ function App() {
  
   return (
     <>
-      {user && <NavBar setUser={setUser} />}
+      {user && <NavBar setUser={setUser} handleLogout={handleLogout} />}
       <main>
         <Routes>
           <Route path="/homepage" element={<Homepage />} />
@@ -47,7 +63,7 @@ function App() {
           <Route path="symptom_success" element={<SymptomNowWhat />} />
           <Route path="selected_period" element={<SelectedPeriod />} />
           <Route path="all/periods" element={<ViewAllPeriods />} />
-          <Route path="logout" element={<Logout />} />
+          <Route path="logout" element={<Logout handleLogout={handleLogout}/>} />
         </Routes> 
       </main>
     </>

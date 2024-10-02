@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Signup({ onSignup }) {
   const [email, setEmail] = useState('');
@@ -7,6 +8,8 @@ function Signup({ onSignup }) {
   const [passwordError, setPasswordError] = useState('');
   const [isLoading, setIsLoading] = useState(false); 
   const [errors, setErrors] = useState([]);
+
+  const navigate = useNavigate(); 
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -62,6 +65,7 @@ function Signup({ onSignup }) {
   };
 
   return (
+    <div className="centered-container">
     <div className="mainContainer">
       <div className="titleContainer">
         <div>sign up for Crimson</div>
@@ -103,6 +107,7 @@ function Signup({ onSignup }) {
           ))}
         </div>
       )}
+    </div>
     </div>
   );
 }
