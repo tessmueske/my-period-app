@@ -5,8 +5,8 @@ import '../index.css';
 function Home() {
     return (
         <div className="centered-container">
-            <h2>welcome to Crimson,</h2>
-            <h2>an app for all people who menstruate</h2>
+            <h3>welcome to Crimson,</h3>
+            <h3>an app for all people who menstruate</h3>
             <br />
             <Link to="/login" className="button">log in</Link>
             <Link to="/signup" className="button">sign up</Link>

@@ -39,6 +39,7 @@ class Period(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date)
+    notes = db.Column(db.String)
 
     symptoms = db.relationship('Symptom', secondary='periodsymptoms', back_populates='periods')
     user = db.relationship('User', back_populates='periods')
@@ -50,7 +51,7 @@ class Period(db.Model, SerializerMixin):
             raise ValueError("start date must be before end date")
 
     def __repr__(self):
-        return f'Period <{self.id}: {self.start_date} through {self.end_date}>'
+        return f'Period <{self.id}: {self.start_date} through {self.end_date}. notes: {self.notes}>'
 
 class Symptom(db.Model, SerializerMixin):
     __tablename__ = 'symptoms'

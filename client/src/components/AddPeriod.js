@@ -13,7 +13,7 @@ function AddPeriod(){
         e.preventDefault();
         setErrors([]);
         setIsLoading(true);
-        fetch("/new_period", {
+        fetch("/add_period", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

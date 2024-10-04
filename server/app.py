@@ -78,7 +78,7 @@ class CheckSession(Resource):
             return {"error": "User not found"}, 404
 
 class AllPeriods(Resource):
-    
+
     def get(self):
         if 'user_id' not in session or session['user_id'] is None:
             return {'error': 'Unauthorized'}, 401
@@ -103,6 +103,7 @@ class NewPeriod(Resource):
             period = Period(
                 start_date=data['start_date'],
                 end_date=data['end_date'],
+                notes=data['notes'],
                 user_id=user.id
             )
             db.session.add(period)
@@ -115,7 +116,8 @@ class NewPeriod(Resource):
 
         return {
             'start_date': period.start_date,
-            'end_date': period.end_date
+            'end_date': period.end_date,
+            'notes': period.notes
         }, 201
 
 
@@ -152,7 +154,7 @@ api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(AllPeriods, '/all_periods', endpoint='all_periods')
-api.add_resource(NewPeriod, '/new_period', endpoint='new_period')
+api.add_resource(NewPeriod, '/add_period', endpoint='add_period')
 api.add_resource(MyPeriod, '/selected_period/<int:period_id>', endpoint='selected_period')
 api.add_resource(Logout, '/logout', endpoint='logout')
 

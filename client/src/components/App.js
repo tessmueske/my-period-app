@@ -8,7 +8,6 @@ import AddPeriod from "./AddPeriod";
 import About from "./About";
 import AddSymptom from "./AddSymptom";
 import Homepage from "./Homepage";
-import Logout from "./Logout";
 import PeriodNowWhat from "./PeriodNowWhat";
 import SymptomNowWhat from "./SymptomNowWhat";
 import SelectedPeriod from "./SelectedPeriod";
@@ -33,7 +32,7 @@ function App() {
       .then((r) => {
         if (r.ok) {
           setUser(null); 
-          navigate("/")
+          navigate("/home")
         }
       })
       .catch((error) => {
@@ -44,7 +43,7 @@ function App() {
   if (!user) return (<div>
     <main>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login onLogin={setUser} />} />
           <Route path="/signup" element={<Signup onSignup={setUser} />} />
           <Route path="/about" element={<About />} />
@@ -58,7 +57,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/homepage" element={<Homepage />} />
-          <Route path="/period/new" element={<AddPeriod />} />
+          <Route path="/add_period" element={<AddPeriod />} />
           <Route path="/symptom/new" element={<AddSymptom />} />
           <Route path="/period_success" element={<PeriodNowWhat />} />
           <Route path="/symptom_success" element={<SymptomNowWhat />} />
