@@ -13,7 +13,8 @@ function About() {
             <div className="centered-container">
             <p>
                 Crimson is a project built by tess mueske in the fall of 2024 for Flatiron School.
-            <p></p>
+            </p>
+            <p>
                 it’s a menstruation tracking app for people of all genders who bleed.
             </p>
             <div className="inputContainer">

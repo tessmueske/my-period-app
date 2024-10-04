@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Link } from "react";
 
 function SymptomNowWhat(){
     return(

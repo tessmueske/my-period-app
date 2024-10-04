@@ -2,9 +2,17 @@ import React, { useState } from "react";
 
 function Logout({ handleLogout }){
 
+    const confirmLogout = () => {
+        if (window.confirm("are you sure you want to log out?")) {
+          handleLogout();
+        }
+      };
+
 return (
     <div>
-      <button onClick={handleLogout}>log out</button>
+      <button onClick={confirmLogout}>
+        log out
+    </button>
     </div>
   );
 }

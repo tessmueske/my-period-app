@@ -30,7 +30,7 @@ function Login({ onLogin }){
             });
         } else {
             r.json().then((err) => {
-                setErrors(err.errors || ["Invalid login credentials."]);
+                setErrors(err.errors || ["invalid login credentials :("]);
             });
         }
     });
@@ -97,7 +97,9 @@ function Login({ onLogin }){
             </button>
           </div>
           <div className="inputContainer">
-        <button className="button" onClick={handleBack}>back</button>
+        <button className="button" onClick={handleBack}>
+            back
+        </button>
       </div>
         </div>
         </div>

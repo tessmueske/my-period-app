@@ -3,10 +3,11 @@ import React, { useState } from "react";
 function AddPeriod(){
 
     const [period, setPeriod] = useState(null);
-    const [periodStartDate, setPeriodStartDate] = useState(null);
-    const [periodEndDate, setPeriodEndDate] = useState(null);
-    const [notes, setNotes] = useState(null)
-
+    const [periodStartDate, setPeriodStartDate] = useState("");
+    const [periodEndDate, setPeriodEndDate] = useState("");
+    const [notes, setNotes] = useState("")
+    const [errors, setErrors] = useState([]); 
+    const [isLoading, setIsLoading] = useState(false);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -18,8 +19,9 @@ function AddPeriod(){
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            start_date,
-            end_date
+            start_date: periodStartDate, 
+            end_date: periodEndDate,    
+            notes: notes
           }),
         }).then((r) => {
           setIsLoading(false);
@@ -34,38 +36,39 @@ function AddPeriod(){
       return (
         <form onSubmit={handleSubmit}>
             <div className="inputContainer">
-                <Input
+                <input
                     type="date"
-                    id="period start date"
+                    id="period-start-date"
                     autoComplete="off"
                     value={periodStartDate}
                     onChange={(e) => setPeriodStartDate(e.target.value)}
             />
             </div>
             <div className="inputContainer">
-                <Input
+                <input
                     type="date"
-                    id="period end date"
+                    id="period-end-date"
                     autoComplete="off"
                     value={periodEndDate}
                     onChange={(e) => setPeriodEndDate(e.target.value)}
                 />
             </div>
             <div className="inputContainer">
-                <Input
-                    type="string"
+                <input
+                    type="text"
                     id="notes"
                     autoComplete="off"
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                 />
             </div>
-            <Button type="submit">{"submit"}</Button>
-          <FormField>
-            {errors.map((err) => (
-              <Error key={err}>{err}</Error>
-            ))}
-          </FormField>
+            <button type="submit">submit</button>
+            {isLoading && <p>loading...</p>}
+            <div>
+                {errors.map((err) => (
+                    <p key={err} className="error">{err}</p>
+                ))}
+            </div>
         </form>
       );
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom"; 
+import { Routes, Route, useNavigate } from "react-router-dom"; 
 import Home from "./Home";
 import NavBar from "./NavBar";
 import Login from "./Login";
@@ -14,7 +14,6 @@ import SymptomNowWhat from "./SymptomNowWhat";
 import SelectedPeriod from "./SelectedPeriod";
 import PeriodCalendar from "./PeriodCalendar";
 import '../index.css'; 
-import { useNavigate } from "react-router-dom";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -43,12 +42,14 @@ function App() {
   };
 
   if (!user) return (<div>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login onLogin={setUser} />} />
-      <Route path="/signup" element={<Signup onSignup={setUser} />} />
-      <Route path="/about" element={<About />} />
-    </Routes>
+    <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login onLogin={setUser} />} />
+          <Route path="/signup" element={<Signup onSignup={setUser} />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </main>
   </div>)
  
   return (
@@ -57,13 +58,12 @@ function App() {
       <main>
         <Routes>
           <Route path="/homepage" element={<Homepage />} />
-          <Route path="period/new" element={<AddPeriod />} />
-          <Route path="symptom/new" element={<AddSymptom />} />
-          <Route path="period_success" element={<PeriodNowWhat />} />
-          <Route path="symptom_success" element={<SymptomNowWhat />} />
-          <Route path="selected_period" element={<SelectedPeriod />} />
-          <Route path="all_periods" element={<PeriodCalendar />} />
-          <Route path="logout" element={<Logout handleLogout={handleLogout}/>} />
+          <Route path="/period/new" element={<AddPeriod />} />
+          <Route path="/symptom/new" element={<AddSymptom />} />
+          <Route path="/period_success" element={<PeriodNowWhat />} />
+          <Route path="/symptom_success" element={<SymptomNowWhat />} />
+          <Route path="/selected_period" element={<SelectedPeriod />} />
+          <Route path="/all_periods" element={<PeriodCalendar />} />
         </Routes> 
       </main>
     </>

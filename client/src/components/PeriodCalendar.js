@@ -11,7 +11,7 @@ function PeriodCalendar(){
     useEffect(() => {
         fetch('/all_periods')
             .then((response) => response.json())
-            .then((calendarData) => setData(calendarData))
+            .then((calendarData) => setPeriods(calendarData))
             .catch((error) => console.error("error fetching calendar data:", error));
     }, []);
 
@@ -34,15 +34,19 @@ function PeriodCalendar(){
                 const periodsOnThisDate = getPeriodsForDate(date);
                 return (
                   <div>
-                    {periodsOnThisDate.length > 0 && <span>• Period</span>}
+                    {periodsOnThisDate.length > 0 && <span className="period-dot">✤</span>}
                   </div>
                 );
+              }
+            }}
+            tileClassName={({ date, view }) => {
+              if (view === 'month' && getPeriodsForDate(date).length > 0) {
+                return 'period-day'; 
               }
             }}
           />
         </div>
       );
-    }
-    
+}
 
 export default PeriodCalendar;
