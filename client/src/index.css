@@ -98,6 +98,25 @@ h2 {
   text-align: center; 
 }
 
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  background: white; /* Background color for the calendar */
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Optional: shadow for depth */
+}
+
+.calendar-period {
+  margin: 10px 0; /* Spacing between periods */
+  padding: 10px;
+  border: 1px solid #ccc; /* Optional: border for periods */
+  border-radius: 5px; /* Optional: rounded edges */
+  width: 100%; /* Take full width of the container */
+  max-width: 300px; /* Max width for the periods */
+  text-align: center; /* Center text within each period */
+}
+
 .button {
   display: inline-block; 
   padding: 5px 10px;

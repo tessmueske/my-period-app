@@ -14,7 +14,7 @@ function Homepage() {
                 click on ‘my periods’ to view all periods by date. there, you can also edit one period’s start or end dates, add or edit its symptoms, or delete a period altogether.
             </p>
             <p>
-                click on 'add a period' to add a new period entry.
+                click on 'add a period' to add a new period entry. from there, you can add symptoms to your new entry. 
             </p>
         </div>
     )

@@ -9,7 +9,7 @@ from werkzeug.security import generate_password_hash
 
 # Local imports
 from config import app, db, api
-from models import db, User, Period, Symptom, PeriodSymptom
+from models import User, Period, Symptom, PeriodSymptom
 
 app.secret_key = 'my_project_123'
 
@@ -77,15 +77,17 @@ class CheckSession(Resource):
         else:
             return {"error": "User not found"}, 404
 
-class Periods(Resource):
+class AllPeriods(Resource):
+    
     def get(self):
-
         if 'user_id' not in session or session['user_id'] is None:
             return {'error': 'Unauthorized'}, 401
 
         user_id = session['user_id']
         periods = Period.query.filter_by(user_id=user_id).all()
         return [period.to_dict() for period in periods], 200
+
+class NewPeriod(Resource):
 
     def post(self):
         if 'user_id' not in session:
@@ -105,15 +107,32 @@ class Periods(Resource):
             )
             db.session.add(period)
             db.session.commit()
+
         except ValueError as e:
             return {'error': str(e)}, 422
         except Exception as e:
-            return {'error': 'Internal server error'}, 500
+            return {'error': 'internal server error'}, 500
 
         return {
             'start_date': period.start_date,
             'end_date': period.end_date
         }, 201
+
+
+class MyPeriod(Resource):
+    def get(self, period_id):
+
+        my_period = Period.query.filter_by(id=period_id).first()
+
+        if my_period:
+            return {
+                'id': my_period.id,
+                'start_date': my_period.start_date,
+                'end_date': my_period.end_date,
+            }, 200
+
+        else:
+            return {'error': 'Period not found'}, 404
 
 
 class Symptoms(Resource):
@@ -132,7 +151,9 @@ class Logout(Resource):
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
-api.add_resource(Periods, '/all_periods', endpoint='all_periods')
+api.add_resource(AllPeriods, '/all_periods', endpoint='all_periods')
+api.add_resource(NewPeriod, '/new_period', endpoint='new_period')
+api.add_resource(MyPeriod, '/selected_period/<int:period_id>', endpoint='selected_period')
 api.add_resource(Logout, '/logout', endpoint='logout')
 
 if __name__ == '__main__':

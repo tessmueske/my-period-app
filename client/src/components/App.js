@@ -12,7 +12,7 @@ import Logout from "./Logout";
 import PeriodNowWhat from "./PeriodNowWhat";
 import SymptomNowWhat from "./SymptomNowWhat";
 import SelectedPeriod from "./SelectedPeriod";
-import ViewAllPeriods from "./ViewAllPeriods";
+import PeriodCalendar from "./PeriodCalendar";
 import '../index.css'; 
 import { useNavigate } from "react-router-dom";
 
@@ -38,7 +38,7 @@ function App() {
         }
       })
       .catch((error) => {
-        console.error("Logout failed:", error);
+        console.error("logout failed:", error);
       });
   };
 
@@ -62,7 +62,7 @@ function App() {
           <Route path="period_success" element={<PeriodNowWhat />} />
           <Route path="symptom_success" element={<SymptomNowWhat />} />
           <Route path="selected_period" element={<SelectedPeriod />} />
-          <Route path="all/periods" element={<ViewAllPeriods />} />
+          <Route path="all_periods" element={<PeriodCalendar />} />
           <Route path="logout" element={<Logout handleLogout={handleLogout}/>} />
         </Routes> 
       </main>

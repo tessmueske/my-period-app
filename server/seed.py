@@ -35,7 +35,7 @@ if __name__ == '__main__':
 
         periods = [
             Period(start_date=datetime.date(2024, 1, 1), end_date=datetime.date(2024, 1, 10), user=users[0]),
-            Period(start_date=datetime.date(2024, 2, 1), end_date=datetime.date(2024, 2, 10), user=users[1]),
+            Period(start_date=datetime.date(2024, 2, 1), end_date=datetime.date(2024, 2, 5), user=users[1]),
             Period(start_date=datetime.date(2024, 3, 1), end_date=datetime.date(2024, 3, 10), user=users[2]) 
         ]
         db.session.bulk_save_objects(periods)
