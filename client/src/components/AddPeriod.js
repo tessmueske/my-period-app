@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function AddPeriod(){
 
@@ -8,6 +9,8 @@ function AddPeriod(){
     const [notes, setNotes] = useState("")
     const [errors, setErrors] = useState([]); 
     const [isLoading, setIsLoading] = useState(false);
+
+    const navigate = useNavigate();
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -27,6 +30,7 @@ function AddPeriod(){
           setIsLoading(false);
           if (r.ok) {
             r.json().then((period) => setPeriod(period));
+            navigate('/period_success');
           } else {
             r.json().then((err) => setErrors(err.errors));
           }
@@ -34,44 +38,52 @@ function AddPeriod(){
       }
 
       return (
+        <div className="add-container">
+            <h3>add a new period</h3>
+            <br></br>
         <form onSubmit={handleSubmit}>
-            <div className="inputContainer">
-                <input
-                    type="date"
-                    id="period-start-date"
-                    autoComplete="off"
-                    value={periodStartDate}
-                    onChange={(e) => setPeriodStartDate(e.target.value)}
+
+          <div className="inputContainer">
+            <label htmlFor="period-start-date">start date: </label>
+            <input
+              type="date"
+              id="period-start-date"
+              value={periodStartDate}
+              onChange={(e) => setPeriodStartDate(e.target.value)}
             />
-            </div>
-            <div className="inputContainer">
-                <input
-                    type="date"
-                    id="period-end-date"
-                    autoComplete="off"
-                    value={periodEndDate}
-                    onChange={(e) => setPeriodEndDate(e.target.value)}
-                />
-            </div>
-            <div className="inputContainer">
-                <input
-                    type="text"
-                    id="notes"
-                    autoComplete="off"
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                />
-            </div>
-            <button type="submit">submit</button>
-            {isLoading && <p>loading...</p>}
-            <div>
-                {errors.map((err) => (
-                    <p key={err} className="error">{err}</p>
-                ))}
-            </div>
+          </div>
+
+          <br></br>
+    
+          <div className="inputContainer">
+            <label htmlFor="period-end-date">end date (optional): </label>
+            <input
+              type="date"
+              id="period-end-date"
+              value={periodEndDate}
+              onChange={(e) => setPeriodEndDate(e.target.value)}
+            />
+          </div>
+
+          <br></br>
+    
+          <div className="inputContainer">
+            <label htmlFor="notes">notes: </label>
+            <input
+              type="text"
+              id="notes"
+              placeholder="add notes about this period"
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+            />
+          </div>
+
+          <br></br>
+    
+          <button type="submit" className="periodButton">submit</button>
         </form>
+        </div>
       );
-
-}
-
-export default AddPeriod;
+    }
+    
+    export default AddPeriod;
