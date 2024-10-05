@@ -1,6 +1,7 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import '../index.css'; 
+import Logout from './Logout'
 
 const NavBar = ({ handleLogout }) => {
   return (
@@ -17,9 +18,7 @@ const NavBar = ({ handleLogout }) => {
             <Link to="/add_period">add a period</Link>
           </li>
           <li>
-            <button onClick={handleLogout}>
-              log out
-            </button>
+            <Logout handleLogout={handleLogout} /> 
           </li>
         </ul>
       </nav>

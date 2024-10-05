@@ -29,9 +29,9 @@ class Signup(Resource):
         if errors:
             return {"errors": errors}, 400 
 
-        existing_user = User.query.filter_by(email=email).first()
-        if existing_user:
-            return {"errors": ["email already exists"]}, 409
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            return {"errors": ["email not registered. please sign up first."]}, 404
 
         new_user = User(email=email)
         new_user.password_hash = password 
@@ -78,14 +78,17 @@ class CheckSession(Resource):
             return {"error": "User not found"}, 404
 
 class AllPeriods(Resource):
-
     def get(self):
-        if 'user_id' not in session or session['user_id'] is None:
-            return {'error': 'Unauthorized'}, 401
+        try:
+            if 'user_id' not in session or session['user_id'] is None:
+                return {'error': 'Unauthorized'}, 401
 
-        user_id = session['user_id']
-        periods = Period.query.filter_by(user_id=user_id).all()
-        return [period.to_dict() for period in periods], 200
+            user_id = session['user_id']
+            periods = Period.query.filter_by(user_id=user_id).all()
+            return [period.to_dict() for period in periods], 200
+
+        except Exception as e:
+            return {'error': str(e)}, 500  
 
 class NewPeriod(Resource):
 

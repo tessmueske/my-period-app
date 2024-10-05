@@ -11,7 +11,9 @@ function PeriodCalendar(){
     useEffect(() => {
         fetch('/all_periods')
             .then((response) => response.json())
-            .then((calendarData) => setPeriods(calendarData))
+            .then((calendarData) => {
+                setPeriods(calendarData);
+            })
             .catch((error) => console.error("error fetching calendar data:", error));
     }, []);
 

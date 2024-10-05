@@ -32,7 +32,7 @@ function App() {
       .then((r) => {
         if (r.ok) {
           setUser(null); 
-          navigate("/home")
+          navigate("/")
         }
       })
       .catch((error) => {
@@ -43,7 +43,7 @@ function App() {
   if (!user) return (<div>
     <main>
         <Routes>
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login onLogin={setUser} />} />
           <Route path="/signup" element={<Signup onSignup={setUser} />} />
           <Route path="/about" element={<About />} />
@@ -58,7 +58,7 @@ function App() {
         <Routes>
           <Route path="/homepage" element={<Homepage />} />
           <Route path="/add_period" element={<AddPeriod />} />
-          <Route path="/symptom/new" element={<AddSymptom />} />
+          <Route path="/add_symptom" element={<AddSymptom />} />
           <Route path="/period_success" element={<PeriodNowWhat />} />
           <Route path="/symptom_success" element={<SymptomNowWhat />} />
           <Route path="/selected_period" element={<SelectedPeriod />} />

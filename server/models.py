@@ -46,6 +46,14 @@ class Period(db.Model, SerializerMixin):
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'start_date': self.start_date.isoformat(), 
+            'end_date': self.end_date.isoformat() if self.end_date else None,
+            'notes': self.notes,
+        }
+
     def validate_dates(self):
         if self.start_date > self.end_date:
             raise ValueError("start date must be before end date")
