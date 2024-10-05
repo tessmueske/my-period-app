@@ -93,6 +93,7 @@ class AllPeriods(Resource):
 class NewPeriod(Resource):
 
     def post(self):
+
         if 'user_id' not in session:
             return {'error': 'Unauthorized request'}, 401
         

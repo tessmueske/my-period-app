@@ -8,7 +8,7 @@ import AddPeriod from "./AddPeriod";
 import About from "./About";
 import AddSymptom from "./AddSymptom";
 import Homepage from "./Homepage";
-import PeriodNowWhat from "./PeriodNowWhat";
+import PeriodSuccess from "./PeriodSuccess";
 import SymptomNowWhat from "./SymptomNowWhat";
 import SelectedPeriod from "./SelectedPeriod";
 import PeriodCalendar from "./PeriodCalendar";
@@ -59,7 +59,7 @@ function App() {
           <Route path="/homepage" element={<Homepage />} />
           <Route path="/add_period" element={<AddPeriod />} />
           <Route path="/add_symptom" element={<AddSymptom />} />
-          <Route path="/period_success" element={<PeriodNowWhat />} />
+          <Route path="/period_success" element={<PeriodSuccess />} />
           <Route path="/symptom_success" element={<SymptomNowWhat />} />
           <Route path="/selected_period" element={<SelectedPeriod />} />
           <Route path="/all_periods" element={<PeriodCalendar />} />

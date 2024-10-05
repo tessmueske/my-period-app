@@ -16,7 +16,7 @@ function AddPeriod(){
         e.preventDefault();
         setErrors([]);
         setIsLoading(true);
-        fetch("/add_period", {
+        fetch("http://localhost:5555/add_period", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -45,6 +45,7 @@ function AddPeriod(){
 
           <div className="inputContainer">
             <label htmlFor="period-start-date">start date: </label>
+            <br></br>
             <input
               type="date"
               id="period-start-date"
@@ -57,6 +58,7 @@ function AddPeriod(){
     
           <div className="inputContainer">
             <label htmlFor="period-end-date">end date (optional): </label>
+            <br></br>
             <input
               type="date"
               id="period-end-date"
@@ -69,6 +71,7 @@ function AddPeriod(){
     
           <div className="inputContainer">
             <label htmlFor="notes">notes: </label>
+            <br></br>
             <input
               type="text"
               id="notes"
