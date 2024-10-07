@@ -1,27 +1,22 @@
 import React, { useState, useEffect } from "react";
 
-function SelectedPeriod(){
-
-    const[selectedPeriod, setSelectedPeriod] = useState(null)
-
-    useEffect(() => {
-        fetch('/selected_period')
-            .then((response) => response.json())
-            .then((data) => setSelectedPeriod(data))
-            .catch((error) => console.error("error fetching period data:", error));
-    }, []);
+function SelectedPeriod({ period }) {
 
     return (
-        <div className="selected-period-container">
-            {selectedPeriod ? (
+        <div>
+            <h2>details:</h2>
+            <p>start date: {new Date(period.start_date).toLocaleDateString()}</p>
+            <p>end date: {new Date(period.end_date).toLocaleDateString()}</p>
+            <p>notes: {period.notes}</p>
+            {period.symptoms && (
                 <div>
-                    <h2>details</h2>
-                    <p>start date: {selectedPeriod.start_date}</p>
-                    <p>end date: {selectedPeriod.end_date}</p>
-                    <p>notes: {selectedPeriod.notes}</p>
+                    <h3>symptoms:</h3>
+                    <ul>
+                        {period.symptoms.map((symptom, index) => (
+                            <li key={index}>{symptom}</li>
+                        ))}
+                    </ul>
                 </div>
-            ) : (
-                <p>loading...</p>
             )}
         </div>
     );

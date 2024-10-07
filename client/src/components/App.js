@@ -48,7 +48,6 @@ function App() {
       <main>
         <Routes>
           {!user ? (
-            // Non-authenticated routes
             <>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login onLogin={setUser} />} />
@@ -57,6 +56,7 @@ function App() {
             </>
           ) : (
             <>
+              <Route path="/" element={<Homepage />} />
               <Route path="/homepage" element={<Homepage />} />
               <Route path="/add_period" element={<AddPeriod />} />
               <Route path="/add_symptom" element={<AddSymptom />} />

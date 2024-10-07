@@ -2,25 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import '../index.css'; 
+import SelectedPeriod from './SelectedPeriod'
 
 function PeriodCalendar(){
-    const [data, setData] = useState([]);
     const [value, setValue] = useState(new Date());
     const [periods, setPeriods] = useState([]);
+    const [selectedPeriod, setSelectedPeriod] = useState(null);
 
     useEffect(() => {
-        // fetch('/all_periods')
-        //     .then((response) => {
-        //         console.log(response);
-        //         if (!response.ok) {
-        //             throw new Error('Network response was not ok');
-        //         }
-        //         return response.json();
-        //     })
-        //     .then((calendarData) => {
-        //         setPeriods(calendarData);
-        //     })
-        //     .catch((error) => console.error("error fetching calendar data:", error))
         fetch('/all_periods')
             .then((response) => response.json())
             .then((calendarData) => {
@@ -36,6 +25,16 @@ function PeriodCalendar(){
           return date >= startDate && date <= endDate;
         });
       };
+
+      const handleDateChange = (date) => {
+        setValue(date);
+        const periodsOnThisDate = getPeriodsForDate(date);
+        if (periodsOnThisDate.length > 0) {
+            setSelectedPeriod(periodsOnThisDate[0]); 
+        } else {
+            setSelectedPeriod(null); 
+        }
+    };
 
       return (
         <div className="calendar-container">

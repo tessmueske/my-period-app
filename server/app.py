@@ -171,7 +171,7 @@ class MyPeriod(Resource):
         if my_period:
             return {
                 'id': my_period.id,
-                'start_date': my_period.start_date.isoformat(),  # Return ISO format for consistency
+                'start_date': my_period.start_date.isoformat(), 
                 'end_date': my_period.end_date.isoformat() if my_period.end_date else None,
             }, 200
 
