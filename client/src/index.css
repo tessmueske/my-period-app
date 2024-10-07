@@ -69,23 +69,23 @@ h2 {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; /* Center children horizontally */
-  height: auto; /* Allow height to adjust based on content */
+  align-items: center; 
+  height: auto; 
   text-align: center; 
-  margin-top: 70px; /* Space from the top of the page */
+  margin-top: 70px;
   width: 100%;
-  max-width: 600px; /* Set a max width to keep the form neat */
-  margin: 100px auto; /* Center the container horizontally and add vertical spacing */
-  background-color: rgb(106, 36, 36); /* Optional: light background color for the container */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+  max-width: 600px; 
+  margin: 100px auto; 
+  background-color: rgb(106, 36, 36);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
   padding: 20px; 
 }
 
 .inputContainer {
-  display: flex; /* Center inputs */
-  justify-content: center; /* Center inputs */
-  align-items: center; /* Center inputs vertically */
-  margin-bottom: 10px; /* Spacing between input fields */
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .periodButton {
@@ -105,7 +105,6 @@ h2 {
 .button:hover {
   background-color: #642121;
 }
-
 
 .centered-container {
   display: flex;

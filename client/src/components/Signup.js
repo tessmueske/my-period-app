@@ -2,112 +2,95 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Signup({ onSignup }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [isLoading, setIsLoading] = useState(false); 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  function handleSignup() {
     setIsLoading(true);
-
-    fetch("/signup", {
+    fetch("http://localhost:5555/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email, password }),
     })
-    .then((r) => {
-      setIsLoading(false);
-      if (r.ok) {
-        r.json().then((user) => {
-            onSignup(user);
-        });
-      } else {
-        r.json().then((err) => {
-          setErrors(err.errors || ["invalid signup credentials :("]);
-        });
-      }
-    });
+      .then((r) => {
+        if (r.ok) {
+          handleLogin();
+        } else {
+          setIsLoading(false); 
+          r.json().then((err) => setErrors(err.errors || ["signup failed"]));
+        }
+      })
+      .catch(() => {
+        setIsLoading(false);
+        setErrors(["something went wrong. please try again."]);
+      });
   }
 
-  const onButtonClick = (e) => {
+  function handleLogin() {
+    fetch("http://localhost:5555/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email, password }),
+      credentials: "include"
+    })
+      .then((r) => {
+        if (r.ok) {
+          r.json().then((user) => {
+            onSignup(user); 
+            navigate("/homepage"); 
+          });
+        } else {
+          setErrors(["login failed after signup. please try logging in manually."]);
+        }
+      })
+      .catch(() => {
+        setErrors(["something went wrong."]);
+      });
+  }
+
+  function handleSubmit(e) {
     e.preventDefault();
-    setEmailError('');
-    setPasswordError('');
-    setErrors([]); 
-
-    if (email === '') {
-      setEmailError(' * please enter your email');
-      return;
-    }
-
-    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-      setEmailError(' * please enter a valid email');
-      return;
-    }
-
-    if (password === '') {
-      setPasswordError(' * please enter a password');
-      return;
-    }
-
-    handleSubmit(e);
-  };
-
-  const handleBack = () => {
-    navigate('/'); 
-  };
+    handleSignup(); 
+  }
 
   return (
     <div className="centered-container">
-    <div className="mainContainer">
-      <div className="titleContainer">
-        <div>sign up for Crimson</div>
-      </div>
-      <br />
-      <div className="inputContainer">
+      <h2>sign up for crimson</h2>
+      <br></br>
+      <form onSubmit={handleSubmit}>
         <input
+          type="email"
           value={email}
-          placeholder="email"
           onChange={(e) => setEmail(e.target.value)}
-          className="inputBox"
+          placeholder="email"
+          required
         />
-        <label className="errorLabel">{emailError}</label>
-      </div>
-      <br />
-      <div className="inputContainer">
+        <br></br>
+        <br></br>
         <input
-          value={password}
-          placeholder="password"
           type="password"
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="inputBox"
+          placeholder="password"
+          required
         />
-        <label className="errorLabel">{passwordError}</label>
-      </div>
-      <br />
-      <div className="inputContainer">
-        <button className="button" onClick={onButtonClick} disabled={isLoading}>
-          {isLoading ? 'signing up...' : 'sign up now'}
+        <br></br>
+        <br></br>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "signing up..." : "sign up"}
         </button>
-      </div>
-      <div className="inputContainer">
-        <button className="button" onClick={handleBack}>back</button>
-      </div>
-      {errors.length > 0 && (
-        <div className="errorContainer">
-          {errors.map((error, index) => (
-            <div key={index} className="errorLabel">{error}</div>
-          ))}
-        </div>
-      )}
-    </div>
+        {errors.length > 0 && errors.map((error, index) => (
+          <p key={index} style={{ color: "red" }}>{error}</p>
+        ))}
+      </form>
     </div>
   );
 }

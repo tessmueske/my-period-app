@@ -9,13 +9,25 @@ function PeriodCalendar(){
     const [periods, setPeriods] = useState([]);
 
     useEffect(() => {
+        // fetch('/all_periods')
+        //     .then((response) => {
+        //         console.log(response);
+        //         if (!response.ok) {
+        //             throw new Error('Network response was not ok');
+        //         }
+        //         return response.json();
+        //     })
+        //     .then((calendarData) => {
+        //         setPeriods(calendarData);
+        //     })
+        //     .catch((error) => console.error("error fetching calendar data:", error))
         fetch('/all_periods')
             .then((response) => response.json())
             .then((calendarData) => {
                 setPeriods(calendarData);
             })
             .catch((error) => console.error("error fetching calendar data:", error));
-    }, []);
+     }, []);
 
     const getPeriodsForDate = (date) => {
         return periods.filter((period) => {

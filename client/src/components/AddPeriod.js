@@ -16,7 +16,7 @@ function AddPeriod(){
         e.preventDefault();
         setErrors([]);
         setIsLoading(true);
-        fetch("http://localhost:5555/add_period", {
+        fetch('http://localhost:3000/add_period', {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
