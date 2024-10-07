@@ -61,6 +61,11 @@ function Signup({ onSignup }) {
     handleSignup(); 
   }
 
+  const handleBack = () => {
+    navigate("/");
+  };
+
+
   return (
     <div className="centered-container">
       <h2>sign up for crimson</h2>
@@ -84,9 +89,13 @@ function Signup({ onSignup }) {
         />
         <br></br>
         <br></br>
-        <button type="submit" disabled={isLoading}>
+        <button type="submit" className="button" disabled={isLoading}>
           {isLoading ? "signing up..." : "sign up"}
         </button>
+        <br></br>
+          <button className="button" onClick={handleBack}>
+            back
+          </button>
         {errors.length > 0 && errors.map((error, index) => (
           <p key={index} style={{ color: "red" }}>{error}</p>
         ))}
