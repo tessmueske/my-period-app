@@ -179,12 +179,10 @@ class Symptoms(Resource):
         data = request.get_json()
 
         severity = data.get('severity')
-        notes = data.get('notes')
         
         try:
             symptom = Symptom(
                 severity=severity,
-                notes=notes,
                 user_id=user.id
             )
             db.session.add(symptom)
@@ -193,7 +191,6 @@ class Symptoms(Resource):
             return {
                 'id': symptom.id,
                 'severity': symptom.severity,
-                'notes': symptom.notes
             }, 201
 
         except Exception as e:

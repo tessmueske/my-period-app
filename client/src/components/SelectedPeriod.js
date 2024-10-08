@@ -20,6 +20,12 @@ function SelectedPeriod({ period }) {
                 </div>
             )}
             <Link to="/add_symptom" className="button">add a symptom</Link>
+            <br></br>
+            <Link to="/IDK YET" className="button">edit or delete a symptom</Link>
+            <br></br>
+            <Link to="/IDK YET" className="button">edit this period</Link>
+            <br></br>
+            <Link to="/IDK YET" className="button">delete this period entirely</Link>
         </div>
     );
 }
