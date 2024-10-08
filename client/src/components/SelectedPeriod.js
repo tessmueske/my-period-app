@@ -19,13 +19,13 @@ function SelectedPeriod({ period }) {
                     </ul>
                 </div>
             )}
-            <Link to="/add_symptom" className="button">add a symptom</Link>
+            <Link to="/add_symptom" >add a symptom</Link>
             <br></br>
-            <Link to="/IDK YET" className="button">edit or delete a symptom</Link>
+            <Link to="/IDK YET">edit or delete a symptom</Link>
             <br></br>
-            <Link to="/IDK YET" className="button">edit this period</Link>
+            <Link to="/IDK YET">edit this period</Link>
             <br></br>
-            <Link to="/IDK YET" className="button">delete this period entirely</Link>
+            <Link to="/selected_period/:period_id/delete">delete this period entirely</Link>
         </div>
     );
 }

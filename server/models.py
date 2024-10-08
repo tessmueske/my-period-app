@@ -78,3 +78,16 @@ class Symptom(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f'Symptom <{self.id}: {self.name}>'
+
+class PeriodSymptom(db.Model, SerializerMixin):
+    __tablename__ = 'periodsymptoms'
+
+    id = db.Column(db.Integer, primary_key=True)
+    severity = db.Column(db.Integer)
+    notes = db.Column(db.String)
+
+    period_id = db.Column(db.Integer, db.ForeignKey('periods.id'))
+    symptom_id = db.Column(db.Integer, db.ForeignKey('symptoms.id'))
+
+    period = db.relationship('Period', backref='periodsymptoms')
+    symptom = db.relationship('Symptom', backref='periodsymptoms')

@@ -166,6 +166,20 @@ class MyPeriod(Resource):
         else:
             return {'error': 'Period not found'}, 404
 
+    def delete(self):
+
+        if 'user_id' not in session:
+            return {'error': 'Unauthorized request'}, 401
+
+        my_period = Period.query.filter_by(id=period_id).first()
+
+        if my_period:
+            session.pop('period_id', None)
+            return '', 204 
+
+        else:
+            return {'error': 'Unauthorized request'}, 401
+
 class Symptoms(Resource):
 
     def post(self):
@@ -201,7 +215,6 @@ class Symptoms(Resource):
 class Logout(Resource):
 
     def delete(self):
-        print(f"Session before logout: {session}")
         if 'user_id' in session and session['user_id'] is not None:
             session.pop('user_id', None)
             return '', 204 
@@ -214,6 +227,7 @@ api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(AllPeriods, '/all_periods', endpoint='all_periods')
 api.add_resource(NewPeriod, '/add_period', endpoint='add_period')
 api.add_resource(MyPeriod, '/selected_period/<int:period_id>', endpoint='selected_period')
+api.add_resource(MyPeriod, '/selected_period/<int:period_id>/delete', endpoint='selected_period')
 api.add_resource(Symptoms, '/add_symptom', endpoint='add_symptom')
 api.add_resource(Logout, '/logout', endpoint='logout')
 
