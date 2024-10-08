@@ -10,7 +10,6 @@ import AddSymptom from "./AddSymptom";
 import Homepage from "./Homepage";
 import PeriodSuccess from "./PeriodSuccess";
 import SymptomNowWhat from "./SymptomNowWhat";
-import SelectedPeriod from "./SelectedPeriod";
 import PeriodCalendar from "./PeriodCalendar";
 import DeletePeriod from "./DeletePeriod";
 import '../index.css'; 
@@ -79,7 +78,6 @@ function App() {
               <Route path="/selected_period/:period_id/delete" element={<DeletePeriod handleDelete={handleDelete} />} />
               <Route path="/period_success" element={<PeriodSuccess />} />
               <Route path="/symptom_success" element={<SymptomNowWhat />} />
-              <Route path="/selected_period" element={<SelectedPeriod />} />
               <Route path="/all_periods" element={<PeriodCalendar />} />
             </>
           )}
