@@ -69,6 +69,7 @@ class Symptom(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     severity = db.Column(db.Integer)
+    notes = db.Column(db.String)
 
     periods = db.relationship('Period', secondary='periodsymptoms', back_populates='symptoms')
 
@@ -79,12 +80,19 @@ class Symptom(db.Model, SerializerMixin):
     def __repr__(self):
         return f'Symptom <{self.id}: {self.name}>'
 
-class PeriodSymptom(db.Model, SerializerMixin):
-    __tablename__ = 'periodsymptoms'
+class Symptom(db.Model, SerializerMixin):
+    __tablename__ = 'symptoms'
 
     id = db.Column(db.Integer, primary_key=True)
-    severity = db.Column(db.String)
+    name = db.Column(db.String, nullable=False)
+    severity = db.Column(db.Integer)  
     notes = db.Column(db.String)
 
-    period_id = db.Column(db.Integer, db.ForeignKey('periods.id'))
-    symptom_id = db.Column(db.Integer, db.ForeignKey('symptoms.id'))
+    periods = db.relationship('Period', secondary='periodsymptoms', back_populates='symptoms')
+
+    def validate_severity(self):
+        if self.severity not in [1, 2, 3, 4, 5]:
+            raise ValueError("Severity must be 1-5")
+
+    def __repr__(self):
+        return f'Symptom <{self.id}: {self.name}>'

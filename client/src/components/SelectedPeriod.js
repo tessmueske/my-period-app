@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Outlet, Link } from "react-router-dom";
 
 function SelectedPeriod({ period }) {
 
@@ -18,6 +19,7 @@ function SelectedPeriod({ period }) {
                     </ul>
                 </div>
             )}
+            <Link to="/add_symptom" className="button">add a symptom</Link>
         </div>
     );
 }

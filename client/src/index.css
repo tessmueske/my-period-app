@@ -147,19 +147,19 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center; 
-  background: #f9f9f9; /* Light background for the box */
+  background: #f9f9f9;
   padding: 20px;
-  border-radius: 10px; /* Rounded corners for the box */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
-  width: 90%; /* Adjust width as necessary */
-  max-width: 500px; /* Smaller width to fit better on the screen */
-  margin: 80px auto 20px auto; /* Center the box and give it some space above and below */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  width: 90%;
+  max-width: 500px; 
+  margin: 80px auto 20px auto; 
 }
 
 .calendar-container h2 {
-  color: rgb(106, 36, 36); /* You can replace this with any color you'd like */
-  font-size: 2em; /* Adjust font size as needed */
-  margin-bottom: 20px; /* Add space below the heading */
+  color: rgb(106, 36, 36);
+  font-size: 2em;
+  margin-bottom: 20px;
 }
 
 
@@ -184,27 +184,27 @@ h2 {
 }
 
 .selected-period-details {
-  text-align: center; /* Center the text */
+  text-align: center;
   margin-top: 20px;
-  color: rgb(106, 36, 36); /* Darker color for the text */
+  color: rgb(106, 36, 36); 
 }
 
 .selected-period-details h1 {
-  font-size: 1.5em; /* Adjust font size as needed */
+  font-size: 1.5em; 
   margin-bottom: 10px;
-  color: rgb(106, 36, 36); /* Ensure the heading is also darker */
+  color: rgb(106, 36, 36); 
 }
 
 .selected-period-details h2 {
-  font-size: 1.5em; /* Adjust font size as needed */
+  font-size: 1.5em; 
   margin-bottom: 10px;
-  color: rgb(106, 36, 36); /* Ensure the heading is also darker */
+  color: rgb(106, 36, 36); 
 }
 
 .selected-period-details p {
-  font-size: 1.1em; /* Make paragraph text a bit larger */
-  margin: 5px 0; /* Add some spacing between the paragraphs */
-  color: rgb(106, 36, 36); /* Darker color for the text */
+  font-size: 1.1em;
+  margin: 5px 0;
+  color: rgb(106, 36, 36); 
 }
 
 

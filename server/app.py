@@ -29,8 +29,6 @@ def after_request(response):
     return response
 
 class Signup(Resource):
-    def options(self):
-        return '', 200
 
     def post(self):
         data = request.get_json()
@@ -41,15 +39,15 @@ class Signup(Resource):
         errors = []
 
         if not email:
-            errors.append("Email is required.")
+            errors.append("email is required.")
         if not password: 
-            errors.append("Password is required.")
+            errors.append("password is required.")
         if errors:
             return {"errors": errors}, 400 
 
         user = User.query.filter_by(email=email).first()
         if user:
-            return {"errors": ["Email already registered. Please log in."]}, 400
+            return {"errors": ["email already registered. please log in."]}, 400
         
         new_user = User(email=email)
         new_user.password_hash = password 
@@ -64,8 +62,6 @@ class Signup(Resource):
             return {"error": f"Failed to create user: {str(e)}"}, 422
 
 class CheckSession(Resource):
-    def options(self):
-        return '', 200
 
     def get(self):
         if 'user_id' not in session or session['user_id'] is None:
@@ -80,8 +76,6 @@ class CheckSession(Resource):
             return {"error": "User not found"}, 404
 
 class Login(Resource):
-    def options(self):
-        return '', 200
 
     def post(self):
         data = request.get_json()
@@ -100,8 +94,6 @@ class Login(Resource):
         return {'error': 'invalid email or password'}, 401
 
 class AllPeriods(Resource):
-    def options(self):
-        return '', 200
 
     def get(self):
         try:
@@ -116,8 +108,6 @@ class AllPeriods(Resource):
             return {'error': str(e)}, 500  
 
 class NewPeriod(Resource):
-    def options(self):
-        return '', 200
 
     def post(self):
         if 'user_id' not in session:
@@ -162,8 +152,6 @@ class NewPeriod(Resource):
             return {'error': 'Internal server error'}, 500
 
 class MyPeriod(Resource):
-    def options(self):
-        return '', 200
 
     def get(self, period_id):
         my_period = Period.query.filter_by(id=period_id).first()
@@ -179,12 +167,41 @@ class MyPeriod(Resource):
             return {'error': 'Period not found'}, 404
 
 class Symptoms(Resource):
-    # TODO: Implement Symptoms functionality later
-    pass
+
+    def post(self):
+        if 'user_id' not in session:
+            return {'error': 'Unauthorized request'}, 401
+        
+        user = User.query.get(session['user_id'])
+        if not user:
+            return {'error': 'Unauthorized request'}, 401
+
+        data = request.get_json()
+
+        severity = data.get('severity')
+        notes = data.get('notes')
+        
+        try:
+            symptom = Symptom(
+                severity=severity,
+                notes=notes,
+                user_id=user.id
+            )
+            db.session.add(symptom)
+            db.session.commit()
+
+            return {
+                'id': symptom.id,
+                'severity': symptom.severity,
+                'notes': symptom.notes
+            }, 201
+
+        except Exception as e:
+            db.session.rollback() 
+            print(f"Error occurred: {e}")
+            return {'error': 'Internal server error'}, 500
 
 class Logout(Resource):
-    def options(self):
-        return '', 200
 
     def delete(self):
         print(f"Session before logout: {session}")
@@ -194,13 +211,13 @@ class Logout(Resource):
         else:
             return {'error': 'Unauthorized request'}, 401
 
-# API resource routing
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(AllPeriods, '/all_periods', endpoint='all_periods')
 api.add_resource(NewPeriod, '/add_period', endpoint='add_period')
 api.add_resource(MyPeriod, '/selected_period/<int:period_id>', endpoint='selected_period')
+api.add_resource(Symptoms, '/add_symptom', endpoint='add_symptom')
 api.add_resource(Logout, '/logout', endpoint='logout')
 
 # Run the application
