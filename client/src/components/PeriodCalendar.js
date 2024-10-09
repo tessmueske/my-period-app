@@ -3,11 +3,12 @@ import Calendar from 'react-calendar';
 import { Outlet, Link } from "react-router-dom";
 import 'react-calendar/dist/Calendar.css';
 import '../index.css'; 
+import AddSymptom from './AddSymptom'
 
-function PeriodCalendar() {
+function PeriodCalendar({ selectedPeriod, setSelectedPeriod }) {
+  
   const [periods, setPeriods] = useState([]);
   const [value, setValue] = useState(new Date());
-  const [selectedPeriod, setSelectedPeriod] = useState(null); 
 
   useEffect(() => {
     fetch('/all_periods')
@@ -74,7 +75,13 @@ function PeriodCalendar() {
             <br></br>
             <p>✤✤✤✤✤</p>
             <br></br>
-            <Link to="/add_symptom" className='button'>add a symptom</Link>
+            <Link 
+              to="/add_symptom" 
+              className='button' 
+              state={{ period: selectedPeriod }}
+            >
+              add a symptom
+            </Link>
             <br></br>
             <Link to="/selected_symptom/:symptom_id/edit" className='button'>edit a symptom</Link>
             <br></br>

@@ -193,9 +193,11 @@ class Symptoms(Resource):
         data = request.get_json()
 
         severity = data.get('severity')
+        name = data.get('name')
         
         try:
             symptom = Symptom(
+                name=name,
                 severity=severity,
                 user_id=user.id
             )
@@ -204,6 +206,7 @@ class Symptoms(Resource):
 
             return {
                 'id': symptom.id,
+                'name': symptom.name,
                 'severity': symptom.severity,
             }, 201
 
