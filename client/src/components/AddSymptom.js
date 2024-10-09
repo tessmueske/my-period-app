@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 function AddSymptom({ period }){
 
-    const [symptom, setSymptom] = useState("");
+    const [name, setName] = useState("");
     const [severity, setSeverity] = useState("");
     const [errors, setErrors] = useState([]);  
     const [isLoading, setIsLoading] = useState(false);
@@ -20,15 +20,18 @@ function AddSymptom({ period }){
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            symptom: symptom,
+            name: name,
             severity: severity,
             period_id: period.id,
           }),
         }).then((r) => {
           setIsLoading(false);
           if (r.ok) {
-            r.json().then((symptom) => setSymptom(symptom));
-            navigate('/symptom_success');
+            r.json().then((symptom) => {
+                setName(""); 
+                setSeverity("");
+                navigate('/symptom_success'); 
+            });
           } else {
             r.json().then((err) => setErrors(err.errors));
           }
@@ -47,8 +50,8 @@ function AddSymptom({ period }){
             <input
               type="text"
               id="symptom-name"
-              value={symptom}
-              onChange={(e) => setSymptom(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
 
@@ -69,16 +72,6 @@ function AddSymptom({ period }){
                 {isLoading ? "submitting..." : "submit"}
               </button>
             </form>
-
-            {errors.length > 0 && (
-              <div className="errors">
-                <ul>
-                  {errors.map((error, index) => (
-                    <li key={index}>{error}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
         </div>
       );
 }

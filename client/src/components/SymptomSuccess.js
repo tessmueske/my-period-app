@@ -1,6 +1,6 @@
 import React, { useState, Link } from "react";
 
-function SymptomNowWhat(){
+function SymptomSuccess(){
     return(
         <div className="centered-container">
         <p>symptom successfully added. now, do you want to...</p>
@@ -12,4 +12,4 @@ function SymptomNowWhat(){
     )
 }
 
-export default SymptomNowWhat;
+export default SymptomSuccess;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function PeriodNowWhat({ period }){
+function PeriodSuccess({ period }){
     return(
         <div className="centered-container">
             <p>period successfully added. now, do you want to...</p>
@@ -13,4 +13,4 @@ function PeriodNowWhat({ period }){
     )
 }
 
-export default PeriodNowWhat;
+export default PeriodSuccess;

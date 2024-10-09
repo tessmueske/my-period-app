@@ -3,10 +3,9 @@ import Calendar from 'react-calendar';
 import { Outlet, Link } from "react-router-dom";
 import 'react-calendar/dist/Calendar.css';
 import '../index.css'; 
-import AddSymptom from './AddSymptom'
 
 function PeriodCalendar({ selectedPeriod, setSelectedPeriod }) {
-  
+
   const [periods, setPeriods] = useState([]);
   const [value, setValue] = useState(new Date());
 

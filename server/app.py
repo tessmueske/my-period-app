@@ -194,14 +194,25 @@ class Symptoms(Resource):
 
         severity = data.get('severity')
         name = data.get('name')
-        
+        period_id = data.get('period_id')
+
+        period = Period.query.get(period_id)
+        if not period:
+            return {'error': 'period not found'}, 404
+
         try:
             symptom = Symptom(
                 name=name,
                 severity=severity,
-                user_id=user.id
             )
+
+            period_symptom = PeriodSymptom(
+                period_id=period.id,
+                symptom_id=symptom.id,
+            )
+
             db.session.add(symptom)
+            db.session.add(period_symptom)
             db.session.commit()
 
             return {
@@ -214,6 +225,7 @@ class Symptoms(Resource):
             db.session.rollback() 
             print(f"Error occurred: {e}")
             return {'error': 'Internal server error'}, 500
+
 
 class Logout(Resource):
 
