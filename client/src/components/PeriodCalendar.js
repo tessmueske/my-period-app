@@ -69,8 +69,11 @@ function PeriodCalendar({ selectedPeriod, setSelectedPeriod }) {
             <h2>period details</h2>
             <p>start date: {new Date(selectedPeriod.start_date).toLocaleDateString()}</p>
             <p>end date: {new Date(selectedPeriod.end_date).toLocaleDateString()}</p>
-            <p>symptoms: {selectedPeriod.symptoms}</p>
             <p>notes: {selectedPeriod.notes}</p>
+            <p>
+              symptoms: {selectedPeriod.symptoms.map(symptom => 
+              `${symptom.name} - ${symptom.severity}`).join(', ')}
+              </p>
             <br></br>
             <p>✤✤✤✤✤</p>
             <br></br>
@@ -82,13 +85,14 @@ function PeriodCalendar({ selectedPeriod, setSelectedPeriod }) {
               add a symptom
             </Link>
             <br></br>
-            <Link to="/selected_symptom/:symptom_id/edit" className='button'>edit a symptom</Link>
+            <Link to={`/selected_symptom/:symptom_id/edit`} className="button">edit a symptom</Link>
+            <br />
+            <Link to={`/selected_symptom/:symptom_id/delete`} className="button">delete a symptom</Link>
+            <br />
             <br></br>
-            <Link to="selected_symptom/:symptom_id/delete" className='button' >delete a symptom</Link>
-            <br></br>
-            <Link to="/selected_period/:period_id/edit" className='button'>edit this period</Link>
-            <br></br>
-            <Link to="/selected_period/:period_id/delete" className='button'>delete this period</Link>
+            <Link to={`/selected_period/${selectedPeriod.id}/edit`} className="button">edit this period</Link>
+            <br />
+            <Link to={`/selected_period/${selectedPeriod.id}/delete`} className="button">delete this period</Link>
           </div>
         ) : (
           <p>select a date with a period to view its details.</p>

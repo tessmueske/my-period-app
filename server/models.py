@@ -51,9 +51,10 @@ class Period(db.Model, SerializerMixin):
     def to_dict(self):
         return {
             'id': self.id,
-            'start_date': self.start_date.isoformat(), 
+            'start_date': self.start_date.isoformat(),
             'end_date': self.end_date.isoformat() if self.end_date else None,
             'notes': self.notes,
+            'symptoms': [{'id': symptom.id, 'name': symptom.name, 'severity': symptom.severity} for symptom in self.symptoms]  
         }
 
     def validate_dates(self):
@@ -83,11 +84,12 @@ class PeriodSymptom(db.Model, SerializerMixin):
     __tablename__ = 'periodsymptoms'
 
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
     severity = db.Column(db.Integer)
     notes = db.Column(db.String)
 
     period_id = db.Column(db.Integer, db.ForeignKey('periods.id'))
     symptom_id = db.Column(db.Integer, db.ForeignKey('symptoms.id'))
 
-    period = db.relationship('Period', backref='periodsymptoms')
-    symptom = db.relationship('Symptom', backref='periodsymptoms')
+    period = db.relationship('Period', backref=db.backref('periodsymptoms', cascade="all, delete-orphan"))
+    symptom = db.relationship('Symptom', backref=db.backref('periodsymptoms', cascade="all, delete-orphan"))

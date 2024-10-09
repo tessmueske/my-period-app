@@ -181,7 +181,7 @@ class MyPeriod(Resource):
             return {'error': 'Unauthorized request'}, 401
 
 class Symptoms(Resource):
-
+    
     def post(self):
         if 'user_id' not in session:
             return {'error': 'Unauthorized request'}, 401
@@ -196,24 +196,31 @@ class Symptoms(Resource):
         name = data.get('name')
         period_id = data.get('period_id')
 
+        # Retrieve the period associated with the symptom
         period = Period.query.get(period_id)
         if not period:
             return {'error': 'period not found'}, 404
 
         try:
+            # Create a new symptom and commit to the database
             symptom = Symptom(
                 name=name,
                 severity=severity,
             )
 
+            db.session.add(symptom)
+            db.session.commit()  # Commit the symptom to generate its id
+
+            # Now, create the PeriodSymptom relationship using the correct symptom_id
             period_symptom = PeriodSymptom(
                 period_id=period.id,
-                symptom_id=symptom.id,
+                symptom_id=symptom.id,  # Set symptom_id to the generated id
+                name=name,
+                severity=severity
             )
 
-            db.session.add(symptom)
             db.session.add(period_symptom)
-            db.session.commit()
+            db.session.commit()  # Commit the relationship
 
             return {
                 'id': symptom.id,
@@ -222,10 +229,9 @@ class Symptoms(Resource):
             }, 201
 
         except Exception as e:
-            db.session.rollback() 
+            db.session.rollback()  # Rollback in case of error
             print(f"Error occurred: {e}")
             return {'error': 'Internal server error'}, 500
-
 
 class Logout(Resource):
 
