@@ -250,6 +250,7 @@ api.add_resource(NewPeriod, '/add_period', endpoint='add_period')
 api.add_resource(MyPeriod, '/selected_period/<int:period_id>', endpoint='selected_period')
 api.add_resource(MyPeriod, '/selected_period/<int:period_id>/delete', endpoint='selected_period_delete')
 api.add_resource(Symptoms, '/add_symptom', endpoint='add_symptom')
+api.add_resource(Symptoms, '/selected_symptom/:symptom_id/delete', endpoint='delete_symptom')
 api.add_resource(Logout, '/logout', endpoint='logout')
 
 # Run the application

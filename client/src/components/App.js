@@ -12,11 +12,13 @@ import PeriodSuccess from "./PeriodSuccess";
 import SymptomSuccess from "./SymptomSuccess";
 import PeriodCalendar from "./PeriodCalendar";
 import DeletePeriod from "./DeletePeriod";
+import DeleteSymptom from "./DeleteSymptom";
 import '../index.css'; 
 
 function App() {
   const [user, setUser] = useState(null);
   const [deletePeriod, setDeletePeriod] = useState(null)
+  const [deleteSymptom, setDeleteSymptom] = useState(null)
   const [selectedPeriod, setSelectedPeriod] = useState(null);
   const navigate = useNavigate();
 
@@ -56,6 +58,20 @@ function App() {
         console.error("deletion failed:", error);
       });
   };
+
+  const handleSymptomDelete = (symptomId) => {
+    fetch(`/selected_symptom/:symptom_id/delete`, { 
+      method: "DELETE",
+    })
+      .then((r) => {
+        if (r.ok) {
+          setDeleteSymptom(null); 
+        }
+      })
+      .catch((error) => {
+        console.error("deletion failed:", error);
+      });
+  };
   
 
   return (
@@ -77,6 +93,7 @@ function App() {
               <Route path="/add_period" element={<AddPeriod />} />
               <Route path="/add_symptom" element={<AddSymptom period={selectedPeriod} />} /> 
               <Route path="/selected_period/:period_id/delete" element={<DeletePeriod handleDelete={handleDelete} />} />
+              <Route path="/selected_symptom/:symptom_id/delete" element={<DeleteSymptom handleSymptomDelete={handleSymptomDelete}/>} />
               <Route path="/period_success" element={<PeriodSuccess />} />
               <Route path="/symptom_success" element={<SymptomSuccess />} />
               <Route path="/all_periods" element={<PeriodCalendar selectedPeriod={selectedPeriod} setSelectedPeriod={setSelectedPeriod} />} />
