@@ -6,6 +6,8 @@ import '../index.css';
 
 function PeriodCalendar({ selectedPeriod, setSelectedPeriod }) {
 
+  console.log(selectedPeriod)
+
   const [periods, setPeriods] = useState([]);
   const [value, setValue] = useState(new Date());
 
@@ -85,9 +87,15 @@ function PeriodCalendar({ selectedPeriod, setSelectedPeriod }) {
               add a symptom
             </Link>
             <br></br>
+            <br />
             <Link to={`/selected_symptom/:symptom_id/edit`} className="button">edit a symptom</Link>
             <br />
-            <Link to={`/selected_symptom/:symptom_id/delete`} className="button">delete a symptom</Link>
+            <Link
+              to={`/periods/${selectedPeriod.id}/symptoms/delete`} 
+              className="button"
+            >
+              delete a symptom
+            </Link>
             <br />
             <br></br>
             <Link to={`/selected_period/${selectedPeriod.id}/edit`} className="button">edit this period</Link>

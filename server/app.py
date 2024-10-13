@@ -181,6 +181,25 @@ class MyPeriod(Resource):
             return {'error': 'Unauthorized request'}, 401
 
 class Symptoms(Resource):
+
+    def get(self, period_id):
+        print(period_id)
+        period_symptoms = PeriodSymptom.query.filter_by(period_id=period_id).all()
+        print(period_symptoms)
+        if period_symptoms:
+            symptoms = [
+                # {
+                #     'id': symptom.id,
+                #     'name': symptom.name,
+                #     'severity': symptom.severity,
+                # }
+                period.to_dict() for period in period_symptoms
+                # for symptom in period_symptoms
+            ]
+            return symptoms, 200
+        else:
+            return {'error': 'No symptoms found for this period'}, 404
+
     
     def post(self):
         if 'user_id' not in session:
@@ -196,32 +215,28 @@ class Symptoms(Resource):
         name = data.get('name')
         period_id = data.get('period_id')
 
-        # Retrieve the period associated with the symptom
         period = Period.query.get(period_id)
         if not period:
             return {'error': 'period not found'}, 404
 
         try:
-            # Create a new symptom and commit to the database
             symptom = Symptom(
                 name=name,
                 severity=severity,
             )
 
             db.session.add(symptom)
-            db.session.commit()  # Commit the symptom to generate its id
+            db.session.commit()  
 
-            # Now, create the PeriodSymptom relationship using the correct symptom_id
             period_symptom = PeriodSymptom(
                 period_id=period.id,
-                symptom_id=symptom.id,  # Set symptom_id to the generated id
+                symptom_id=symptom.id, 
                 name=name,
                 severity=severity
             )
 
             db.session.add(period_symptom)
-            db.session.commit()  # Commit the relationship
-
+            db.session.commit()  
             return {
                 'id': symptom.id,
                 'name': symptom.name,
@@ -229,7 +244,24 @@ class Symptoms(Resource):
             }, 201
 
         except Exception as e:
-            db.session.rollback()  # Rollback in case of error
+            db.session.rollback()  
+            print(f"Error occurred: {e}")
+            return {'error': 'Internal server error'}, 500
+
+    def delete(self, period_id):
+
+        if 'user_id' not in session:
+            return {'error': 'Unauthorized request'}, 401
+    
+        try:
+            period_symptom = PeriodSymptom.query.filter_by(period_id=period_id).first()
+            if period_symptom:
+                db.session.delete(period_symptom)
+
+            return '', 204  
+
+        except Exception as e:
+            db.session.rollback()
             print(f"Error occurred: {e}")
             return {'error': 'Internal server error'}, 500
 
@@ -238,9 +270,10 @@ class Logout(Resource):
     def delete(self):
         if 'user_id' in session and session['user_id'] is not None:
             session.pop('user_id', None)
-            return '', 204 
+            return '', 204
         else:
             return {'error': 'Unauthorized request'}, 401
+
 
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
@@ -250,9 +283,9 @@ api.add_resource(NewPeriod, '/add_period', endpoint='add_period')
 api.add_resource(MyPeriod, '/selected_period/<int:period_id>', endpoint='selected_period')
 api.add_resource(MyPeriod, '/selected_period/<int:period_id>/delete', endpoint='selected_period_delete')
 api.add_resource(Symptoms, '/add_symptom', endpoint='add_symptom')
-api.add_resource(Symptoms, '/selected_symptom/:symptom_id/delete', endpoint='delete_symptom')
+api.add_resource(Symptoms, '/periods/<int:period_id>/symptoms', endpoint='symptoms')
+api.add_resource(Symptoms, '/periods/<int:period_id>/symptoms/delete', endpoint='delete_symptoms')
 api.add_resource(Logout, '/logout', endpoint='logout')
 
-# Run the application
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

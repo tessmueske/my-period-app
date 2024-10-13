@@ -15,11 +15,13 @@ class User(db.Model, SerializerMixin):
 
     periods = db.relationship('Period', back_populates='user')
 
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'email': self.email
-        } 
+    serialize_rules = ('-periods.user',)
+
+    # def to_dict(self):
+    #     return {
+    #         'id': self.id,
+    #         'email': self.email
+    #     } 
 
     @hybrid_property
     def password_hash(self):
@@ -48,14 +50,16 @@ class Period(db.Model, SerializerMixin):
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'start_date': self.start_date.isoformat(),
-            'end_date': self.end_date.isoformat() if self.end_date else None,
-            'notes': self.notes,
-            'symptoms': [{'id': symptom.id, 'name': symptom.name, 'severity': symptom.severity} for symptom in self.symptoms]  
-        }
+    serialize_rules = ('-user.periods', '-symptoms.periods')
+
+    # def to_dict(self):
+    #     return {
+    #         'id': self.id,
+    #         'start_date': self.start_date.isoformat(),
+    #         'end_date': self.end_date.isoformat() if self.end_date else None,
+    #         'notes': self.notes,
+    #         'symptoms': [{'id': symptom.id, 'name': symptom.name, 'severity': symptom.severity} for symptom in self.symptoms]  
+    #     }
 
     def validate_dates(self):
         if self.start_date > self.end_date:
@@ -73,6 +77,8 @@ class Symptom(db.Model, SerializerMixin):
 
     periods = db.relationship('Period', secondary='periodsymptoms', back_populates='symptoms')
 
+    serialize_rules = ('-periods.symptoms',)
+
     def validate_severity(self):
         if self.severity not in [1, 2, 3, 4, 5]:
             raise ValueError("severity must be 1-5")
@@ -87,6 +93,8 @@ class PeriodSymptom(db.Model, SerializerMixin):
     name = db.Column(db.String)
     severity = db.Column(db.Integer)
     notes = db.Column(db.String)
+
+    serialize_rules = ('-period', '-symptom')
 
     period_id = db.Column(db.Integer, db.ForeignKey('periods.id'))
     symptom_id = db.Column(db.Integer, db.ForeignKey('symptoms.id'))
