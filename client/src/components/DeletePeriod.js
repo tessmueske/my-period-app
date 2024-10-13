@@ -6,6 +6,7 @@ function DeletePeriod({ selectedPeriod, setSelectedPeriod }) {
   const handleDelete = () => {
     fetch(`http://localhost:5555/periods/${selectedPeriod.id}`, {
       method: "DELETE",
+      credentials: 'include',
     })
       .then((response) => {
         if (response.ok) {
