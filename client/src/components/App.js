@@ -13,6 +13,7 @@ import SymptomSuccess from "./SymptomSuccess";
 import PeriodCalendar from "./PeriodCalendar";
 import DeletePeriod from "./DeletePeriod";
 import DeleteSymptom from "./DeleteSymptom";
+import UpdatePeriod from "./UpdatePeriod";
 import '../index.css'; 
 
 function App() {
@@ -81,6 +82,7 @@ function App() {
               <Route path="/period_success" element={<PeriodSuccess />} />
               <Route path="/symptom_success" element={<SymptomSuccess />} />
               <Route path="/all_periods" element={<PeriodCalendar selectedPeriod={selectedPeriod} setSelectedPeriod={setSelectedPeriod} />} />
+              <Route path="/periods/:period_id/edit" element={<UpdatePeriod />} />
             </>
           )}
         </Routes>

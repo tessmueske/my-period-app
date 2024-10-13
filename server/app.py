@@ -152,6 +152,53 @@ class NewPeriod(Resource):
             db.session.rollback() 
             return {'error': 'Internal server error'}, 500
 
+    def patch(self, period_id):
+
+        if 'user_id' not in session:
+            return {'error': 'Unauthorized request'}, 401 
+
+        my_period = Period.query.filter_by(id=period_id).first()
+
+        if not my_period:
+            return {'error': 'Period not found'}, 404
+
+        data = request.get_json()
+
+        start_date = data.get('start_date')
+        end_date = data.get('end_date')
+        notes = data.get('notes')
+
+        if start_date:
+            try:
+                my_period.start_date = datetime.fromisoformat(start_date)
+            except ValueError:
+                return {'error': 'Invalid start date format'}, 422
+        
+        if end_date:
+            try:
+                my_period.end_date = datetime.fromisoformat(end_date)
+            except ValueError:
+                return {'error': 'Invalid end date format'}, 422
+
+        if notes is not None: 
+            my_period.notes = notes
+
+        if end_date and start_date and my_period.start_date > my_period.end_date:
+            return {'error': 'Start date must be before end date'}, 400
+        
+        try:
+            db.session.commit()
+            return {
+                'id': my_period.id,
+                'start_date': my_period.start_date.isoformat(),
+                'end_date': my_period.end_date.isoformat() if my_period.end_date else None,
+                'notes': my_period.notes
+            }, 200
+
+        except Exception as e:
+            db.session.rollback()
+            return {'error': 'Internal server error'}, 500
+
 class MyPeriod(Resource):
 
     def get(self, period_id):
@@ -283,6 +330,7 @@ api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(AllPeriods, '/all_periods', endpoint='all_periods')
 api.add_resource(NewPeriod, '/add_period', endpoint='add_period')
 api.add_resource(MyPeriod, '/selected_period/<int:period_id>', endpoint='selected_period')
+api.add_resource(MyPeriod, '/periods/<int:period_id>/edit', endpoint='selected_period_edit')
 api.add_resource(MyPeriod, '/periods/<int:period_id>', endpoint='selected_period_delete')
 api.add_resource(Symptoms, '/add_symptom', endpoint='add_symptom')
 api.add_resource(Symptoms, '/periods/<int:period_id>/symptoms', endpoint='symptoms')
