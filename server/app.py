@@ -241,22 +241,31 @@ class Symptoms(Resource):
             print(f"Error occurred: {e}")
             return {'error': 'Internal server error'}, 500
 
-    def delete(self, period_id):
-
+    def delete(self, period_id, symptom_id):
         if 'user_id' not in session:
             return {'error': 'Unauthorized request'}, 401
-    
+
         try:
             period_symptom = PeriodSymptom.query.filter_by(period_id=period_id).first()
-            if period_symptom:
-                db.session.delete(period_symptom)
+            if not period_symptom:
+                return {'error': 'Symptom not found'}, 404
+        
+            symptom_id = period_symptom.symptom_id
+        
+            db.session.delete(period_symptom)
 
-            return '', 204  
+            symptom = Symptom.query.get(symptom_id)
+            if symptom:
+                db.session.delete(symptom)
+
+            db.session.commit()
+            return '', 204
 
         except Exception as e:
             db.session.rollback()
             print(f"Error occurred: {e}")
             return {'error': 'Internal server error'}, 500
+
 
 class Logout(Resource):
 
@@ -277,7 +286,7 @@ api.add_resource(MyPeriod, '/selected_period/<int:period_id>', endpoint='selecte
 api.add_resource(MyPeriod, '/periods/<int:period_id>', endpoint='selected_period_delete')
 api.add_resource(Symptoms, '/add_symptom', endpoint='add_symptom')
 api.add_resource(Symptoms, '/periods/<int:period_id>/symptoms', endpoint='symptoms')
-api.add_resource(Symptoms, '/periods/<int:period_id>/symptoms/delete', endpoint='delete_symptoms')
+api.add_resource(Symptoms, '/periods/<int:period_id>/symptoms/<int:symptom_id>/delete', endpoint='delete_symptom')
 api.add_resource(Logout, '/logout', endpoint='logout')
 
 if __name__ == '__main__':

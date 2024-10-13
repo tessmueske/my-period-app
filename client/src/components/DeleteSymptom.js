@@ -10,7 +10,7 @@ const DeleteSymptom = ({ selectedPeriod }) => {
   useEffect(() => {
     const fetchSymptoms = async () => {
       try {
-        const response = await fetch(`/periods/${selectedPeriod.id}/symptoms`);
+        const response = await fetch(`http://localhost:5555/periods/${selectedPeriod.id}/symptoms`);
         if (!response.ok) {
           throw new Error('Failed to fetch symptoms');
         }
@@ -24,14 +24,14 @@ const DeleteSymptom = ({ selectedPeriod }) => {
     fetchSymptoms();
   }, [selectedPeriod]); 
 
-  const handleDelete = async (id) => {
-    console.log(id)
+  const handleDelete = async (periodId, symptomId) => {
     try {
-      const response = await fetch(`/periods/${id}/symptoms/delete`, {
+      const response = await fetch(`http://localhost:5555/periods/${periodId}/symptoms/${symptomId}/delete`, {
         method: 'DELETE',
+        credentials: 'include',
       });
       if (response.ok) {
-        setSymptoms(symptoms.filter(symptom => symptom.id !== id));
+        setSymptoms(symptoms.filter(symptom => symptom.id !== symptomId));
         alert('Symptom deleted successfully');
       } else {
         throw new Error('Failed to delete symptom');
@@ -44,13 +44,13 @@ const DeleteSymptom = ({ selectedPeriod }) => {
   return (
     <div>
       <h3 className="centered-container">select a symptom to delete</h3>
-      <ul>
+      <ul className="symptom-list">
         {symptoms.map((symptom) => (
-          <li key={symptom.id}>
-            {console.log(symptom)}
-            <div>
+          <li key={symptom.id} className="symptom-item">
+            <div className="symptom-details">
               <span>{symptom.name}</span>
-              <button onClick={() => handleDelete(symptom.id)}>delete</button>
+              <br />
+              <button onClick={() => handleDelete(selectedPeriod.id, symptom.id)} className='button'>delete</button>
             </div>
           </li>
         ))}
@@ -60,4 +60,3 @@ const DeleteSymptom = ({ selectedPeriod }) => {
 };
 
 export default DeleteSymptom;
-
