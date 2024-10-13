@@ -17,7 +17,6 @@ import '../index.css';
 
 function App() {
   const [user, setUser] = useState(null);
-  const [deletePeriod, setDeletePeriod] = useState(null)
   const [deleteSymptom, setDeleteSymptom] = useState(null)
   const [selectedPeriod, setSelectedPeriod] = useState(null);
   const navigate = useNavigate();
@@ -40,24 +39,8 @@ function App() {
           navigate("/");
         }
       })
-      .catch((error) => {
-        console.error("logout failed:", error);
-      });
   };
-
-  const handleDelete = (periodId) => {
-    fetch(`http://localhost:5555/selected_period/${periodId}/delete`, { 
-      method: "DELETE",
-    })
-      .then((r) => {
-        if (r.ok) {
-          setDeletePeriod(null); 
-        }
-      })
-      .catch((error) => {
-        console.error("deletion failed:", error);
-      });
-  };
+  
 
   const handleSymptomDelete = (symptomId) => {
     fetch(`/symptoms/${symptomId}/delete`, {
@@ -93,7 +76,7 @@ function App() {
               <Route path="/homepage" element={<Homepage />} />
               <Route path="/add_period" element={<AddPeriod />} />
               <Route path="/add_symptom" element={<AddSymptom period={selectedPeriod} />} /> 
-              <Route path="/periods/:period_id/delete" element={<DeletePeriod handleDelete={handleDelete} />} />
+              <Route path="/periods/:period_id/delete" element={<DeletePeriod selectedPeriod={selectedPeriod} setSelectedPeriod={setSelectedPeriod} />} />
               <Route path="/periods/:period_id/symptoms/delete" element={<DeleteSymptom handleSymptomDelete={handleSymptomDelete} selectedPeriod={selectedPeriod}/>} />
               <Route path="/period_success" element={<PeriodSuccess />} />
               <Route path="/symptom_success" element={<SymptomSuccess />} />
@@ -107,3 +90,4 @@ function App() {
 }
 
 export default App;
+

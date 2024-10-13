@@ -1,19 +1,36 @@
-import React from "react";
-import { useParams } from "react-router-dom";  
-import '../index.css'; 
+import { useNavigate } from "react-router-dom";
 
-function DeletePeriod({ handleDelete }) {
-  const { period_id } = useParams();  
+function DeletePeriod({ selectedPeriod, setSelectedPeriod }) {
+  const navigate = useNavigate();
 
-  const confirmDelete = () => {
-    if (window.confirm("are you sure you want to delete this period?")) {
-      handleDelete(period_id);  
-    }
+  const handleDelete = () => {
+    fetch(`http://localhost:5555/periods/${selectedPeriod.id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          setSelectedPeriod(null);
+          navigate("/all_periods");
+        } else {
+          console.error("Failed to delete the period");
+        }
+      })
+      .catch((error) => {
+        console.error("Deletion failed:", error);
+      });
+  };
+
+  const handleBackToPeriod = () => {
+    navigate("/all_periods");
   };
 
   return (
-    <div>
-      <button onClick={confirmDelete}>delete period</button>
+    <div className="centered-container">
+      <p>
+        are you sure you want to delete the period of dates {selectedPeriod.start_date} through {selectedPeriod.end_date}?
+      </p>
+      <button className="button" onClick={handleDelete}>yes, delete</button>
+      <button className="button" onClick={handleBackToPeriod}>no, take me back</button>
     </div>
   );
 }

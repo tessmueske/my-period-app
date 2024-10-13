@@ -16,19 +16,16 @@ from flask_bcrypt import Bcrypt
 from config import app, db, api
 from models import User, Period, Symptom, PeriodSymptom 
 
-CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://localhost:3000"}})
-
 bcrypt = Bcrypt()
+CORS(app, supports_credentials=True)
 
 app.secret_key = 'jgfklfjgds5437958397'
 
-@app.after_request
-def after_request(response):
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-    response.headers.add('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
-    return response
-
 class Signup(Resource):
+
+    @classmethod
+    def options(cls):
+        return '', 200
 
     def post(self):
         data = request.get_json()
@@ -76,6 +73,10 @@ class CheckSession(Resource):
             return {"error": "User not found"}, 404
 
 class Login(Resource):
+
+    @classmethod
+    def options(cls):
+        return '', 200
 
     def post(self):
         data = request.get_json()
@@ -166,35 +167,27 @@ class MyPeriod(Resource):
         else:
             return {'error': 'Period not found'}, 404
 
-    def delete(self):
+    def delete(self, period_id):
 
         if 'user_id' not in session:
-            return {'error': 'Unauthorized request'}, 401
+            return {'error': 'Unauthorized request'}, 401 
 
         my_period = Period.query.filter_by(id=period_id).first()
 
         if my_period:
-            session.pop('period_id', None)
-            return '', 204 
+            db.session.delete(my_period)
+            db.session.commit()
+            return '', 204  
 
-        else:
-            return {'error': 'Unauthorized request'}, 401
+        return {'error': 'Period not found'}, 404
 
 class Symptoms(Resource):
 
     def get(self, period_id):
-        print(period_id)
         period_symptoms = PeriodSymptom.query.filter_by(period_id=period_id).all()
-        print(period_symptoms)
         if period_symptoms:
             symptoms = [
-                # {
-                #     'id': symptom.id,
-                #     'name': symptom.name,
-                #     'severity': symptom.severity,
-                # }
                 period.to_dict() for period in period_symptoms
-                # for symptom in period_symptoms
             ]
             return symptoms, 200
         else:
@@ -281,7 +274,7 @@ api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(AllPeriods, '/all_periods', endpoint='all_periods')
 api.add_resource(NewPeriod, '/add_period', endpoint='add_period')
 api.add_resource(MyPeriod, '/selected_period/<int:period_id>', endpoint='selected_period')
-api.add_resource(MyPeriod, '/selected_period/<int:period_id>/delete', endpoint='selected_period_delete')
+api.add_resource(MyPeriod, '/periods/<int:period_id>', endpoint='selected_period_delete')
 api.add_resource(Symptoms, '/add_symptom', endpoint='add_symptom')
 api.add_resource(Symptoms, '/periods/<int:period_id>/symptoms', endpoint='symptoms')
 api.add_resource(Symptoms, '/periods/<int:period_id>/symptoms/delete', endpoint='delete_symptoms')

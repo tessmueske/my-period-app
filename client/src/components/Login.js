@@ -16,11 +16,11 @@ function Login({ onLogin }) {
     setIsLoading(true);
     fetch("http://localhost:5555/login", { 
         method: "POST",
+        credentials: 'include',
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
-        credentials: "include"
     })
       .then((r) => {
         setIsLoading(false);
