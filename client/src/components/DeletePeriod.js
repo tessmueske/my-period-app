@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function DeletePeriod({ selectedPeriod, setSelectedPeriod }) {
   const navigate = useNavigate();
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const handleDelete = () => {
     fetch(`http://localhost:5555/periods/${selectedPeriod.id}`, {
@@ -11,7 +13,10 @@ function DeletePeriod({ selectedPeriod, setSelectedPeriod }) {
       .then((response) => {
         if (response.ok) {
           setSelectedPeriod(null);
-          navigate("/all_periods");
+          setShowSuccessPopup(true); 
+          setTimeout(() => {
+            navigate("/all_periods");
+          }, 3000); 
         } else {
           console.error("Failed to delete the period");
         }
@@ -27,11 +32,21 @@ function DeletePeriod({ selectedPeriod, setSelectedPeriod }) {
 
   return (
     <div className="centered-container">
-      <p>
-        are you sure you want to delete the period of dates {selectedPeriod.start_date} through {selectedPeriod.end_date}?
-      </p>
-      <button className="button" onClick={handleDelete}>yes, delete</button>
-      <button className="button" onClick={handleBackToPeriod}>no, take me back</button>
+      {!showSuccessPopup ? ( 
+        selectedPeriod ? (
+          <>
+            <p>
+              are you sure you want to delete the period of dates {selectedPeriod.start_date} through {selectedPeriod.end_date}?
+            </p>
+            <button className="button" onClick={handleDelete}>yes, delete</button>
+            <button className="button" onClick={handleBackToPeriod}>no, take me back</button>
+          </>
+        ) : (
+          <p>no period selected</p>
+        )
+      ) : (
+        <p>period deleted successfully. returning to calendar...</p>
+      )}
     </div>
   );
 }

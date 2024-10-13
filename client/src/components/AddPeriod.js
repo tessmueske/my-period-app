@@ -57,7 +57,7 @@ function AddPeriod(){
           <br></br>
     
           <div className="inputContainer">
-            <label htmlFor="period-end-date">end date (optional): </label>
+            <label htmlFor="period-end-date">end date: </label>
             <br></br>
             <input
               type="date"
