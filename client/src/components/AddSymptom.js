@@ -68,7 +68,7 @@ function AddSymptom({ selectedPeriod }){
             />
           </div>
     
-          <button type="submit" className="button">
+          <button type="submit" className="periodButton">
                 {isLoading ? "submitting..." : "submit"}
               </button>
             </form>

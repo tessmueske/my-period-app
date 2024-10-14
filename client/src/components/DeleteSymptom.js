@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const DeleteSymptom = ({ selectedPeriod }) => {
-  const { periodId, symptomId } = useParams();
 
   const [symptoms, setSymptoms] = useState([]);
-
+  const navigate = useNavigate();
  
   useEffect(() => {
     const fetchSymptoms = async () => {
@@ -33,6 +32,7 @@ const DeleteSymptom = ({ selectedPeriod }) => {
       if (response.ok) {
         setSymptoms(symptoms.filter(symptom => symptom.id !== symptomId));
         alert('Symptom deleted successfully');
+        navigate("/all_periods")
       } else {
         throw new Error('Failed to delete symptom');
       }

@@ -64,7 +64,7 @@ function UpdatePeriod({ selectedPeriod }) {
           )}
           <form onSubmit={handleSubmit}>
             <div className="inputContainer">
-              <label htmlFor="period-start-date">updated start date:</label>
+              <label htmlFor="period-start-date">updated start date: </label>
               <br />
               <input
                 type="date"
@@ -77,7 +77,7 @@ function UpdatePeriod({ selectedPeriod }) {
             <br />
     
             <div className="inputContainer">
-              <label htmlFor="period-end-date">updated end date:</label>
+              <label htmlFor="period-end-date">updated end date: </label>
               <br />
               <input
                 type="date"
@@ -90,7 +90,7 @@ function UpdatePeriod({ selectedPeriod }) {
             <br />
     
             <div className="inputContainer">
-              <label htmlFor="notes">notes:</label>
+              <label htmlFor="notes">notes: </label>
               <br />
               <input
                 type="text"

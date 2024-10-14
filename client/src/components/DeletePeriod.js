@@ -16,7 +16,7 @@ function DeletePeriod({ selectedPeriod, setSelectedPeriod }) {
           setShowSuccessPopup(true); 
           setTimeout(() => {
             navigate("/all_periods");
-          }, 3000); 
+          }, 2000); 
         } else {
           console.error("Failed to delete the period");
         }
