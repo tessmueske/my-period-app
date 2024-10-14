@@ -152,10 +152,22 @@ class NewPeriod(Resource):
             db.session.rollback() 
             return {'error': 'Internal server error'}, 500
 
-    def patch(self, period_id):
+class MyPeriod(Resource):
 
-        if 'user_id' not in session:
-            return {'error': 'Unauthorized request'}, 401 
+    def get(self, period_id):
+        my_period = Period.query.filter_by(id=period_id).first()
+
+        if my_period:
+            return {
+                'id': my_period.id,
+                'start_date': my_period.start_date.isoformat(), 
+                'end_date': my_period.end_date.isoformat() if my_period.end_date else None,
+            }, 200
+
+        else:
+            return {'error': 'Period not found'}, 404
+
+    def put(self, period_id):
 
         my_period = Period.query.filter_by(id=period_id).first()
 
@@ -198,21 +210,6 @@ class NewPeriod(Resource):
         except Exception as e:
             db.session.rollback()
             return {'error': 'Internal server error'}, 500
-
-class MyPeriod(Resource):
-
-    def get(self, period_id):
-        my_period = Period.query.filter_by(id=period_id).first()
-
-        if my_period:
-            return {
-                'id': my_period.id,
-                'start_date': my_period.start_date.isoformat(), 
-                'end_date': my_period.end_date.isoformat() if my_period.end_date else None,
-            }, 200
-
-        else:
-            return {'error': 'Period not found'}, 404
 
     def delete(self, period_id):
 
@@ -330,7 +327,7 @@ api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(AllPeriods, '/all_periods', endpoint='all_periods')
 api.add_resource(NewPeriod, '/add_period', endpoint='add_period')
 api.add_resource(MyPeriod, '/selected_period/<int:period_id>', endpoint='selected_period')
-api.add_resource(MyPeriod, '/periods/<int:period_id>/edit', endpoint='selected_period_edit')
+api.add_resource(MyPeriod, '/periods/<int:period_id>/edit', methods=['PUT'], endpoint='selected_period_edit')
 api.add_resource(MyPeriod, '/periods/<int:period_id>', endpoint='selected_period_delete')
 api.add_resource(Symptoms, '/add_symptom', endpoint='add_symptom')
 api.add_resource(Symptoms, '/periods/<int:period_id>/symptoms', endpoint='symptoms')

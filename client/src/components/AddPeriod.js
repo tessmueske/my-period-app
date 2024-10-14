@@ -49,7 +49,7 @@ function AddPeriod(){
             <input
               type="date"
               id="period-start-date"
-              value={periodStartDate}
+              value={periodStartDate || ""}
               onChange={(e) => setPeriodStartDate(e.target.value)}
             />
           </div>
@@ -62,7 +62,7 @@ function AddPeriod(){
             <input
               type="date"
               id="period-end-date"
-              value={periodEndDate}
+              value={periodEndDate || ""}
               onChange={(e) => setPeriodEndDate(e.target.value)}
             />
           </div>
@@ -76,7 +76,7 @@ function AddPeriod(){
               type="text"
               id="notes"
               placeholder="add notes about this period"
-              value={notes}
+              value={notes || ""}
               onChange={(e) => setNotes(e.target.value)}
             />
           </div>
