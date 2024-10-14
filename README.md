@@ -1,8 +1,11 @@
 README.md for my Phase 4 Final Project
 
-Queer Health App ~ For Queer People who Menstruate with Gender-Neutral Language
+Crimson ~ For Queer People who Menstruate with Gender-Neutral Language
+The mission is to create an app for users of all genders who menstruate that allows them to track their menstruation without gendered language about bodies or products.
 
-Mission: to enable users of all genders who menstruate to access an app that allows them to track their menstruation without gendered language about bodies or products.
+I polled my Instagram followers about what language feels best for them regarding menstruation. It seems that both menstruation and period causes dysphoria for different people. Others prefer "bleeding", "monthly", or other various terms. Some people preferred using terms such as "on the rag" in a joking manner. I chose to call my project "Crimson" in hopes that it detracted from the focus solely on the words "menstruation" or "period", also adding a nudge to those who preferred words such as "bleeding". 
+
+I chose a dark grey as the background color for my project because it emits the least amount of carbon. Other choices for colors were also made with this research in mind (dark red, for example). The source for this is https://consider.digital/low-carbon-web-colour-palettes/.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -74,17 +77,10 @@ You should descibe your application first, and with a good level of detail. The 
 
 Screenshots and links to resources that you used throughout are also useful to users and collaborators, but a little more syntactically complicated. Only add these in if you're feeling comfortable with Markdown. -->
 
-HOW TO EMIT LESS CARBON EMISSIONS?
-I chose black as the backgroup color for my project because it emits the least amount of carbon. Other choices for colors were also made with this research in mind. (olive green, burnt orange)
-
-Source: 
-https://consider.digital/low-carbon-web-colour-palettes/
-
-HOW TO MAKE THE APP MORE ACCESSIBLE?
-
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Potential future expansions:
+Additional accessibiliy features
 Filter by a symptom to see its prevalence (how many periods it is associated with)
 Recommend Doctors
 Surgery Information
