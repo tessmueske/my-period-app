@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom"; 
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom"; 
 import Home from "./Home";
 import NavBar from "./NavBar";
 import Login from "./Login";
@@ -40,6 +40,7 @@ function App() {
     .then((response) => {
       console.log("Response status:", response.status);
       if (response.status === 204) {
+        setUser(null);
         navigate("/");
       } else {
         console.error("Logout failed:", response);
@@ -72,9 +73,10 @@ function App() {
       {user && <NavBar setUser={setUser} handleLogout={handleLogout} />}
       <main>
         <Routes>
+          <Route path="/" element={user ? <Navigate to="/homepage" /> : <Home />} />
+          
           {!user ? (
             <>
-              <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login onLogin={setUser} />} />
               <Route path="/signup" element={<Signup onSignup={setUser} />} />
               <Route path="/about" element={<About />} />
@@ -98,6 +100,5 @@ function App() {
     </>
   );
 }
-
 export default App;
 
