@@ -80,7 +80,7 @@ function PeriodCalendar({ selectedPeriod, setSelectedPeriod }) {
             <Link 
               to="/add_symptom" 
               className='button' 
-              state={{ period: selectedPeriod }}
+              state={{ selectedPeriod: selectedPeriod }}
             >
               add a symptom to this period
             </Link>

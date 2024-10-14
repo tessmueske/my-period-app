@@ -32,16 +32,23 @@ function App() {
   }, []);
 
   const handleLogout = () => {
+    console.log("Attempting to log out...");
     fetch("http://localhost:5555/logout", { 
       method: "DELETE",
+      credentials: "include"
     })
-      .then((r) => {
-        if (r.ok) {
-          setUser(null); 
-          navigate("/");
-        }
-      })
-  };
+    .then((response) => {
+      console.log("Response status:", response.status);
+      if (response.status === 204) {
+        navigate("/");
+      } else {
+        console.error("Logout failed:", response);
+      }
+    })
+    .catch((error) => {
+      console.error("Logout failed:", error);
+    });
+}
   
 
   const handleSymptomDelete = (symptomId) => {
@@ -74,10 +81,9 @@ function App() {
             </>
           ) : (
             <>
-              <Route path="/" element={<Homepage />} />
               <Route path="/homepage" element={<Homepage />} />
               <Route path="/add_period" element={<AddPeriod />} />
-              <Route path="/add_symptom" element={<AddSymptom period={selectedPeriod} />} /> 
+              <Route path="/add_symptom" element={<AddSymptom selectedPeriod={selectedPeriod} />} /> 
               <Route path="/periods/:period_id/delete" element={<DeletePeriod selectedPeriod={selectedPeriod} setSelectedPeriod={setSelectedPeriod} />} />
               <Route path="/periods/:period_id/symptoms/delete" element={<DeleteSymptom handleSymptomDelete={handleSymptomDelete} selectedPeriod={selectedPeriod}/>} />
               <Route path="/period_success" element={<PeriodSuccess />} />

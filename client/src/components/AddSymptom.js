@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
-function AddSymptom({ period }){
+function AddSymptom({ selectedPeriod }){
 
     const [name, setName] = useState("");
     const [severity, setSeverity] = useState("");
@@ -22,7 +22,7 @@ function AddSymptom({ period }){
           body: JSON.stringify({
             name: name,
             severity: severity,
-            period_id: period.id,
+            period_id: selectedPeriod.id,
           }),
         }).then((r) => {
           setIsLoading(false);
@@ -40,7 +40,7 @@ function AddSymptom({ period }){
 
       return (
         <div className="add-container">
-            <h3>add a new symptom to the period of dates {period.start_date} through {period.end_date}</h3>
+            <h3>add a new symptom to this period:</h3>
             <br></br>
         <form onSubmit={handleSubmit}>
 
@@ -68,7 +68,7 @@ function AddSymptom({ period }){
             />
           </div>
     
-          <button type="submit" className="periodButton">
+          <button type="submit" className="button">
                 {isLoading ? "submitting..." : "submit"}
               </button>
             </form>

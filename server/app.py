@@ -314,11 +314,8 @@ class Symptoms(Resource):
 class Logout(Resource):
 
     def delete(self):
-        if 'user_id' in session and session['user_id'] is not None:
-            session.pop('user_id', None)
-            return '', 204
-        else:
-            return {'error': 'Unauthorized request'}, 401
+        session.pop('user_id', None)
+        return '', 204
 
 
 api.add_resource(Signup, '/signup', endpoint='signup')
