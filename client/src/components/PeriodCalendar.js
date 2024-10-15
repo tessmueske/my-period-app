@@ -5,7 +5,6 @@ import 'react-calendar/dist/Calendar.css';
 import '../index.css'; 
 
 function PeriodCalendar({ selectedPeriod, setSelectedPeriod }) {
-
   const [periods, setPeriods] = useState([]);
   const [value, setValue] = useState(new Date());
 
@@ -13,7 +12,7 @@ function PeriodCalendar({ selectedPeriod, setSelectedPeriod }) {
     fetch('/all_periods')
       .then((response) => response.json())
       .then((calendarData) => {
-        setPeriods(calendarData);
+        setPeriods(calendarData); // Set periods from fetched data
       })
       .catch((error) => console.error("error fetching calendar data:", error));
   }, []);
@@ -22,33 +21,51 @@ function PeriodCalendar({ selectedPeriod, setSelectedPeriod }) {
     return periods.filter((period) => {
       const startDate = new Date(period.start_date);
       const endDate = new Date(period.end_date);
-      return date >= startDate && date <= endDate;
+      return date >= startDate && date <= endDate; // Filter periods for the given date (inclusive)
     });
   };
 
   const handleDateClick = (date) => {
     const periodsOnThisDate = getPeriodsForDate(date);
     if (periodsOnThisDate.length > 0) {
-      setSelectedPeriod(periodsOnThisDate[0]);
+      setSelectedPeriod(periodsOnThisDate[0]); // Set the first period found
     } else {
       setSelectedPeriod(null); 
     }
     setValue(date);
   };
 
+  // Helper function to get all dates between two dates
+  const getAllDatesBetween = (startDate, endDate) => {
+    const dates = [];
+    let currentDate = new Date(startDate);
+    while (currentDate <= endDate) {
+      dates.push(new Date(currentDate)); // Push a copy of the date
+      currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
+    }
+    return dates;
+  };
+
   return (
     <div className="calendar-container">
       <h2>my periods</h2>
-      <br></br>
+      <br />
       <Calendar
         onChange={handleDateClick}
         value={value}
         tileContent={({ date, view }) => {
           if (view === 'month') {
-            const periodsOnThisDate = getPeriodsForDate(date);
+            // Create an array of all dots to show based on periods
+            const periodsWithDots = periods.filter(period => {
+              const startDate = new Date(period.start_date);
+              const endDate = new Date(period.end_date);
+              const allDatesInPeriod = getAllDatesBetween(startDate, endDate);
+              return allDatesInPeriod.some(d => d.toDateString() === date.toDateString());
+            });
+
             return (
               <div>
-                {periodsOnThisDate.length > 0 && <span className="period-dot">✤</span>}
+                {periodsWithDots.length > 0 && <span className="period-dot">✤</span>}
               </div>
             );
           }
@@ -59,24 +76,24 @@ function PeriodCalendar({ selectedPeriod, setSelectedPeriod }) {
           }
         }}
       />
-
       <div className="selected-period-details">
         {selectedPeriod ? (
           <div>
-            <br></br>
+            <br />
             <p>✤✤✤✤✤</p>
-            <br></br>
+            <br />
             <h2>period details</h2>
             <p>start date: {new Date(selectedPeriod.start_date).toLocaleDateString()}</p>
             <p>end date: {new Date(selectedPeriod.end_date).toLocaleDateString()}</p>
             <p>notes: {selectedPeriod.notes}</p>
             <p>
-              symptoms: {selectedPeriod.symptoms.map(symptom => 
-              `${symptom.name} - ${symptom.severity}`).join(', ')}
+              symptoms: {selectedPeriod.symptoms && selectedPeriod.symptoms.length > 0
+              ? selectedPeriod.symptoms.map(symptom => `${symptom.name} - ${symptom.severity}`).join(', ')
+              : 'No symptoms recorded'}
               </p>
-            <br></br>
+            <br />
             <p>✤✤✤✤✤</p>
-            <br></br>
+            <br />
             <Link 
               to="/add_symptom" 
               className='button' 
@@ -92,13 +109,14 @@ function PeriodCalendar({ selectedPeriod, setSelectedPeriod }) {
               delete a symptom from this period
             </Link>
             <br />
-            <br></br>
+            <br />
             <Link to={`/periods/:period_id/edit`} className="button">edit this period</Link>
             <br />
             <Link to={`/periods/${selectedPeriod.id}/delete`} className="button">delete this period entirely</Link>
           </div>
         ) : (
-          <p>select a date with a period to view its details.</p>
+          // Show message only if no period is selected and the clicked date is not a start date of a period
+          getPeriodsForDate(value).length === 0 && <p>select a date with a period to view its details.</p>
         )}
       </div>
     </div>
@@ -106,3 +124,5 @@ function PeriodCalendar({ selectedPeriod, setSelectedPeriod }) {
 }
 
 export default PeriodCalendar;
+
+

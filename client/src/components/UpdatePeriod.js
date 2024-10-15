@@ -1,127 +1,90 @@
-import React, { useEffect } from "react";
-import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 
-function UpdatePeriod({ selectedPeriod }) {
-  const navigate = useNavigate();
-
+function UpdatePeriod({ selectedPeriod, updateSelectedPeriod }) {
+    const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-      periodStartDate: "",
-      periodEndDate: "",
-      notes: "",
+      start_date: selectedPeriod.start_date,
+      end_date: selectedPeriod.end_date,
+      notes: selectedPeriod.notes,
+      symptoms: selectedPeriod.symptoms || [],
     },
     onSubmit: (values) => {
-      handleUpdate(values);
+      // Make your API call to update the period
+      fetch(`/periods/${selectedPeriod.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // After a successful update, call the update function
+          updateSelectedPeriod(data);
+          navigate('/period_update_success');
+          // Redirect or close the form as needed
+        })
+        .catch((error) => {
+          // Handle errors
+          console.error("Error updating period:", error);
+        });
     },
   });
 
-  useEffect(() => {
-    const fetchPeriod = async () => {
-      if (selectedPeriod.id) {
-        try {
-          const response = await fetch(`http://localhost:5555/periods/${selectedPeriod.id}`);
-          const data = await response.json();
-          formik.setValues({
-            periodStartDate: data.start_date,
-            periodEndDate: data.end_date,
-            notes: data.notes,
-          });
-        } catch (err) {
-          console.error("Error fetching period:", err);
-          formik.setErrors({ api: [err.message] });
-        }
-      }
-    };
-
-    fetchPeriod();
-  }, [selectedPeriod.id]); // Removed formik from dependency array
-
-  const handleUpdate = (values) => {
-    fetch(`http://localhost:5555/periods/${selectedPeriod.id}/edit`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({
-        start_date: values.periodStartDate,
-        end_date: values.periodEndDate,
-        notes: values.notes,
-      }),
-    })
-      .then((r) => {
-        if (r.ok) {
-          r.json().then(() => {
-            navigate("/period_update_success");
-          });
-        } else {
-          r.json().then((err) => formik.setErrors({ api: err.errors || ["Update failed"] }));
-        }
-      });
-  };
-
   return (
     <div className="centered-container">
-      <h3>update period of {selectedPeriod.start_date} through {selectedPeriod.end_date}</h3>
+      <h3>update period from {selectedPeriod.start_date} to {selectedPeriod.end_date}</h3>
       {formik.errors.api && (
         <div className="errors">
           <p>{formik.errors.api.join(", ")}</p>
         </div>
       )}
+      <br></br>
+      <br></br>
       <form onSubmit={formik.handleSubmit}>
-        <div className="inputContainer">
-          <label htmlFor="periodStartDate">updated start date: </label>
-          <br />
+        <label>
+          start date: 
           <input
             type="date"
-            id="periodStartDate"
-            name="periodStartDate"
-            value={formik.values.periodStartDate}
+            name="start_date"
             onChange={formik.handleChange}
+            value={formik.values.start_date}
           />
-        </div>
-
-        <br />
-
-        <div className="inputContainer">
-          <label htmlFor="periodEndDate">updated end date: </label>
-          <br />
+        </label>
+        <br></br>
+        <br></br>
+        <label>
+          end date: 
           <input
             type="date"
-            id="periodEndDate"
-            name="periodEndDate"
-            value={formik.values.periodEndDate}
+            name="end_date"
             onChange={formik.handleChange}
+            value={formik.values.end_date}
           />
-        </div>
-
-        <br />
-
-        <div className="inputContainer">
-          <label htmlFor="notes">notes: </label>
-          <br />
-          <input
-            type="text"
-            id="notes"
-            name="notes" 
-            placeholder="add notes about this period"
+        </label>
+        <br></br>
+        <br></br>
+        <label>
+          notes: 
+          <textarea
+            name="notes"
+            onChange={formik.handleChange}
             value={formik.values.notes}
-            onChange={formik.handleChange}
           />
-        </div>
-
-        <br />
-
-        <button type="submit" className="button">
-          {formik.isSubmitting ? "Updating..." : "Submit"}
-        </button>
+        </label>
+        <br></br>
+        <br></br>
+        <button type="submit">update period</button>
       </form>
     </div>
   );
 }
 
 export default UpdatePeriod;
+
 
 
 

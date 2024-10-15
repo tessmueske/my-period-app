@@ -51,7 +51,6 @@ function App() {
     });
 }
   
-
   const handleSymptomDelete = (symptomId) => {
     fetch(`/symptoms/${symptomId}/delete`, {
       method: "DELETE",
@@ -65,6 +64,10 @@ function App() {
       .catch((error) => {
         console.error("symptom deletion failed:", error);
       });
+  };
+
+  const updateSelectedPeriod = (updatedPeriod) => {
+    setSelectedPeriod(updatedPeriod); // Update state with the new period
   };
   
 
@@ -91,7 +94,7 @@ function App() {
               <Route path="/period_success" element={<PeriodSuccess />} />
               <Route path="/symptom_success" element={<SymptomSuccess />} />
               <Route path="/all_periods" element={<PeriodCalendar selectedPeriod={selectedPeriod} setSelectedPeriod={setSelectedPeriod} />} />
-              <Route path="/periods/:period_id/edit" element={<UpdatePeriod selectedPeriod={selectedPeriod} />} />
+              <Route path="/periods/:period_id/edit" element={<UpdatePeriod selectedPeriod={selectedPeriod} updateSelectedPeriod={updateSelectedPeriod} />} />
               <Route path="/period_update_success" element={<UpdateSuccess />} />
             </>
           )}
