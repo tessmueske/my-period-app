@@ -17,20 +17,25 @@ function UpdatePeriod({ selectedPeriod }) {
   });
 
   useEffect(() => {
-    fetch(`http://localhost:5555/periods/${selectedPeriod.id}`)
-      .then((r) => r.json())
-      .then((data) => {
-        formik.setValues({
-          periodStartDate: data.start_date,
-          periodEndDate: data.end_date,
-          notes: data.notes,
-        });
-      })
-      .catch((err) => {
-        console.error("Error fetching period:", err);
-        formik.setErrors({ api: [err.message] });
-      });
-  }, [selectedPeriod.id, formik]);
+    const fetchPeriod = async () => {
+      if (selectedPeriod.id) {
+        try {
+          const response = await fetch(`http://localhost:5555/periods/${selectedPeriod.id}`);
+          const data = await response.json();
+          formik.setValues({
+            periodStartDate: data.start_date,
+            periodEndDate: data.end_date,
+            notes: data.notes,
+          });
+        } catch (err) {
+          console.error("Error fetching period:", err);
+          formik.setErrors({ api: [err.message] });
+        }
+      }
+    };
+
+    fetchPeriod();
+  }, [selectedPeriod.id]); // Removed formik from dependency array
 
   const handleUpdate = (values) => {
     fetch(`http://localhost:5555/periods/${selectedPeriod.id}/edit`, {
@@ -47,7 +52,7 @@ function UpdatePeriod({ selectedPeriod }) {
     })
       .then((r) => {
         if (r.ok) {
-          r.json().then((updatedPeriod) => {
+          r.json().then(() => {
             navigate("/period_update_success");
           });
         } else {
@@ -109,7 +114,7 @@ function UpdatePeriod({ selectedPeriod }) {
         <br />
 
         <button type="submit" className="button">
-          {formik.isSubmitting ? "updating..." : "submit"}
+          {formik.isSubmitting ? "Updating..." : "Submit"}
         </button>
       </form>
     </div>
@@ -117,6 +122,8 @@ function UpdatePeriod({ selectedPeriod }) {
 }
 
 export default UpdatePeriod;
+
+
 
 
 // import React, { useEffect, useState } from "react";
