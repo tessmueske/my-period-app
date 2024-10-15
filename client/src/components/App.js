@@ -50,26 +50,10 @@ function App() {
       console.error("Logout failed:", error);
     });
 }
-  
-  const handleSymptomDelete = (symptomId) => {
-    fetch(`/symptoms/${symptomId}/delete`, {
-      method: "DELETE",
-    })
-      .then((r) => {
-        if (r.ok) {
-          setDeleteSymptom(null); 
-          console.log("symptom deleted successfully");
-        }
-      })
-      .catch((error) => {
-        console.error("symptom deletion failed:", error);
-      });
-  };
 
   const updateSelectedPeriod = (updatedPeriod) => {
-    setSelectedPeriod(updatedPeriod); // Update state with the new period
+    setSelectedPeriod(updatedPeriod);
   };
-  
 
   return (
     <>
@@ -90,7 +74,7 @@ function App() {
               <Route path="/add_period" element={<AddPeriod />} />
               <Route path="/add_symptom" element={<AddSymptom selectedPeriod={selectedPeriod} />} /> 
               <Route path="/periods/:period_id/delete" element={<DeletePeriod selectedPeriod={selectedPeriod} setSelectedPeriod={setSelectedPeriod} />} />
-              <Route path="/periods/:period_id/symptoms/delete" element={<DeleteSymptom handleSymptomDelete={handleSymptomDelete} selectedPeriod={selectedPeriod}/>} />
+              <Route path="/periods/:period_id/symptoms/delete" element={<DeleteSymptom selectedPeriod={selectedPeriod} />} />
               <Route path="/period_success" element={<PeriodSuccess />} />
               <Route path="/symptom_success" element={<SymptomSuccess />} />
               <Route path="/all_periods" element={<PeriodCalendar selectedPeriod={selectedPeriod} setSelectedPeriod={setSelectedPeriod} />} />

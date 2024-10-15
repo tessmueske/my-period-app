@@ -8,7 +8,7 @@ I polled my Instagram followers about what language feels best for them regardin
 
 I chose a dark grey as the background color for my project because it emits the least amount of carbon. Other choices for colors were also made with this research in mind (dark red, for example). 
 
-Video walk-through of Crimson: LINK HERE
+Video walk-through of Crimson: https://youtu.be/W725zgQJ5uI
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
