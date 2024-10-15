@@ -43,20 +43,24 @@ const DeleteSymptom = ({ selectedPeriod }) => {
   return (
     <div>
       <h3 className="centered-container">select a symptom to delete</h3>
-      <ul className="symptom-list">
-        {symptoms.map((symptom) => (
-          <li key={symptom.id} className="symptom-item">
-            <div className="symptom-details">
-              <span>{symptom.name}</span>
-              <br />
-              <button onClick={() => handleDelete(selectedPeriod.id, symptom.id)} className='button'>delete</button>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {symptoms.length === 0 ? ( 
+        <p className='centered-container'>no symptoms to display</p> 
+      ) : (
+        <ul className="symptom-list">
+          {symptoms.map((symptom) => (
+            <li key={symptom.id} className="symptom-item">
+              <div className="symptom-details">
+                <span>{symptom.name}</span>
+                <br />
+                <button onClick={() => handleDelete(selectedPeriod.id, symptom.id)} className='button'>delete</button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
-};
+}
+  
 
 export default DeleteSymptom;
-

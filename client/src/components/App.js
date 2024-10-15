@@ -71,7 +71,7 @@ function App() {
           ) : (
             <>
               <Route path="/homepage" element={<Homepage />} />
-              <Route path="/add_period" element={<AddPeriod />} />
+              <Route path="/add_period" element={<AddPeriod setSelectedPeriod={setSelectedPeriod} />} />
               <Route path="/add_symptom" element={<AddSymptom selectedPeriod={selectedPeriod} />} /> 
               <Route path="/periods/:period_id/delete" element={<DeletePeriod selectedPeriod={selectedPeriod} setSelectedPeriod={setSelectedPeriod} />} />
               <Route path="/periods/:period_id/symptoms/delete" element={<DeleteSymptom selectedPeriod={selectedPeriod} />} />

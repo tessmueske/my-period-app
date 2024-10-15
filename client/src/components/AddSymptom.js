@@ -5,7 +5,7 @@ import { Formik, Form, Field } from 'formik';
 function AddSymptom({ selectedPeriod }) {
   const navigate = useNavigate();
 
-  console.log(selectedPeriod)
+  console.log(selectedPeriod);
 
   const handleSubmit = (values, { setSubmitting, setErrors, resetForm }) => {
     setSubmitting(true);
@@ -54,20 +54,20 @@ function AddSymptom({ selectedPeriod }) {
                 type="text"
                 id="symptom-name"
                 name="name"
-                placeholder="enter symptom name"
+                placeholder="add symptom name"
               />
             </div>
 
             <br />
 
             <div className="inputContainer">
-              <label htmlFor="symptom-severity">severity (1-5): </label>
+              <label htmlFor="symptom-severity">severity: </label>
               <br />
               <Field
-                type="number"
+                type="text"
                 id="symptom-severity"
                 name="severity"
-                placeholder="enter severity (1-5)"
+                placeholder="add symptom severity"
               />
             </div>
 
@@ -75,8 +75,8 @@ function AddSymptom({ selectedPeriod }) {
 
             {errors.serverError && <div className="error">{errors.serverError}</div>}
 
-            <button type="submit" className="periodButton" disabled={isSubmitting}>
-              {isSubmitting ? "submitting..." : "submit"}
+            <button type="submit" className="symptomButton" disabled={isSubmitting}>
+              {isSubmitting ? 'submitting...' : 'submit'}
             </button>
           </Form>
         )}

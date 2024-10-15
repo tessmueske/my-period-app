@@ -13,9 +13,8 @@ function PeriodCalendar({ selectedPeriod, setSelectedPeriod }) {
       .then((response) => response.json())
       .then((calendarData) => {
         setPeriods(calendarData); 
-        console.log("Fetched periods:", calendarData);
       })
-      .catch((error) => console.error("error fetching calendar data:", error));
+      .catch((error) => console.error("Error fetching calendar data:", error));
   }, []);
 
   const getPeriodsForDate = (date) => {
@@ -29,7 +28,7 @@ function PeriodCalendar({ selectedPeriod, setSelectedPeriod }) {
   const handleDateClick = (date) => {
     const periodsOnThisDate = getPeriodsForDate(date);
     if (periodsOnThisDate.length > 0) {
-      setSelectedPeriod(periodsOnThisDate[0]);
+      setSelectedPeriod(periodsOnThisDate[0]); 
     } else {
       setSelectedPeriod(null); 
     }
@@ -88,8 +87,8 @@ function PeriodCalendar({ selectedPeriod, setSelectedPeriod }) {
             <p>
               symptoms: {selectedPeriod.symptoms && selectedPeriod.symptoms.length > 0
               ? selectedPeriod.symptoms.map(symptom => `${symptom.name} - ${symptom.severity}`).join(', ')
-              : 'No symptoms recorded'}
-              </p>
+              : ''}
+            </p>
             <br />
             <p>✤✤✤✤✤</p>
             <br />
@@ -108,13 +107,12 @@ function PeriodCalendar({ selectedPeriod, setSelectedPeriod }) {
               delete a symptom from this period
             </Link>
             <br />
-            <br />
-            <Link to={`/periods/:period_id/edit`} className="button">edit this period</Link>
+            <Link to={`/periods/${selectedPeriod.id}/edit`} className="button">edit this period</Link>
             <br />
             <Link to={`/periods/${selectedPeriod.id}/delete`} className="button">delete this period entirely</Link>
           </div>
         ) : (
-          getPeriodsForDate(value).length === 0 && <p>select a date with a period to view its details.</p>
+          getPeriodsForDate(value).length === 0 && <p>select a date with a period to view its details</p>
         )}
       </div>
     </div>
@@ -122,5 +120,3 @@ function PeriodCalendar({ selectedPeriod, setSelectedPeriod }) {
 }
 
 export default PeriodCalendar;
-
-

@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from 'formik';
 
-function AddPeriod() {
+function AddPeriod({ setSelectedPeriod }) {
   const navigate = useNavigate();
 
   const handleSubmit = (values, { setSubmitting, setErrors }) => {
@@ -22,6 +22,7 @@ function AddPeriod() {
         setSubmitting(false);
         if (r.ok) {
           r.json().then((period) => {
+            setSelectedPeriod(period); 
             navigate('/period_success');  
           });
         } else {
@@ -77,7 +78,7 @@ function AddPeriod() {
             {errors.serverError && <div className="error">{errors.serverError}</div>}
 
             <button type="submit" className="periodButton" disabled={isSubmitting}>
-              {isSubmitting ? 'Submitting...' : 'submit'}
+              {isSubmitting ? 'submitting...' : 'submit'}
             </button>
           </Form>
         )}
