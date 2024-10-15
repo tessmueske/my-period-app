@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import 'react-calendar/dist/Calendar.css';
 import '../index.css'; 
 

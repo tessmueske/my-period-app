@@ -8,6 +8,8 @@ I polled my Instagram followers about what language feels best for them regardin
 
 I chose a dark grey as the background color for my project because it emits the least amount of carbon. Other choices for colors were also made with this research in mind (dark red, for example). 
 
+Video walk-through of Crimson: LINK HERE
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [ FEATURES ]
@@ -31,6 +33,10 @@ Meeting friends function
 Dating function
 Hookup function
 Message/Chat groups (think Lex groups, Reddit threads)
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Check out my DEV.to post on model relationships in Flask! --> https://dev.to/tessmueske/exploring-model-relationships-in-flask-22al
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

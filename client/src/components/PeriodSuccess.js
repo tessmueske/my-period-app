@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function PeriodSuccess({ period }){
+function PeriodSuccess(){
     return(
         <div className="centered-container">
             <p>period successfully added. now, do you want to...</p>
