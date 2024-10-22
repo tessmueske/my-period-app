@@ -3,7 +3,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import Flask, request, session
+from flask import Flask, request, session, jsonify
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -93,6 +93,66 @@ class Login(Resource):
             }, 200
 
         return {'error': 'invalid email or password'}, 401
+
+
+############ PRACTICE ############
+
+# User Profile Management Create routes for managing user profiles where users can view, edit, and delete their profiles.
+# Create a GET route to fetch the user's profile details.
+# Create a PUT route to update the user's profile information.
+# Create a DELETE route to remove a user profile from the system.
+
+class UserProfile(Resource):
+
+    def get(self, user_id):
+
+        user = User.query.filter_by(id=user_id).first()
+
+        if user:
+            return {
+                'email': user.email
+            }, 200
+
+        else:
+            return {'error': 'User not found'}, 404
+
+    def put(self, user_id):
+
+        user = User.query.filter_by(id=user_id).first()    
+
+        data = request.get_json()
+        email = data.get('email')
+
+        if email:
+            try:
+            
+                user.email = email
+
+                db.session.commit()
+
+                return {
+                    "id": user.id,
+                    "email": user.email
+                }, 200
+
+            except Exception as e:
+                db.session.rollback()
+                return {'error': 'Internal server error'}, 500
+
+    def delete(self, user_id):
+
+        user = User.query.filter_by(id=user_id).first()
+
+        if user:
+            db.session.delete(user)
+            db.session.commit()
+            print("Successfully deleted")
+
+        else:
+            return {'error': 'User not found'}, 404
+
+
+####################################
 
 class AllPeriods(Resource):
 
@@ -225,9 +285,35 @@ class MyPeriod(Resource):
 
         return {'error': 'Period not found'}, 404
 
+############ PRACTICE ############
+
+class FrequentSymptoms(Resource):
+
+    def get(self):
+
+        most_frequent_symptom = Symptom.query.all()
+
+        output = {}
+
+        if most_frequent_symptom:
+            for symptom in most_frequent_symptom:
+                print(symptom)
+                if symptom.name not in output:
+                    output[symptom.name] = 0
+                output[symptom.name] += 1
+
+                print(output)
+    
+        most_frequent_symptom = max(output, key = output.get)
+
+        return(most_frequent_symptom)
+
+####################################
+
 class Symptoms(Resource):
 
     def get(self, period_id):
+
         period_symptoms = PeriodSymptom.query.filter_by(period_id=period_id).all()
         if period_symptoms:
             symptoms = [
@@ -237,7 +323,6 @@ class Symptoms(Resource):
         else:
             return {'error': 'No symptoms found for this period'}, 404
 
-    
     def post(self):
         if 'user_id' not in session:
             return {'error': 'Unauthorized request'}, 401
@@ -310,6 +395,44 @@ class Symptoms(Resource):
             print(f"Error occurred: {e}")
             return {'error': 'Internal server error'}, 500
 
+############ PRACTICE ############
+
+# Details:
+# Use a PUT route to update the severity of an existing symptom.
+# Validate that the symptom exists and ensure the severity is within the allowed range (1-5).
+# If successful, return the updated symptom data. If the symptom is not found or severity is invalid, return an error message.
+
+class MySymptom(Resource):
+
+    def get(self, period_id, symptom_id):
+
+        symptom = Symptom.query.filter_by(id=symptom_id).first()  
+
+        if symptom:
+            return {
+                "symptom": symptom.name,
+                "severity": symptom.severity
+            }
+
+        else:
+            return {'error': 'Internal server error'}, 500
+
+    def put(self, period_id, symptom_id):
+        
+        symptom = Symptom.query.filter_by(id=symptom_id).first()  
+
+        data = request.get_json()
+
+        if symptom:
+            severity = data.get('severity')
+            symptom.severity = severity
+            db.session.commit()
+            return { "severity": symptom.severity }, 201
+
+        else:
+            return {"Error"}
+
+####################################
 
 class Logout(Resource):
 
@@ -330,6 +453,14 @@ api.add_resource(Symptoms, '/add_symptom', endpoint='add_symptom')
 api.add_resource(Symptoms, '/periods/<int:period_id>/symptoms', endpoint='symptoms')
 api.add_resource(Symptoms, '/periods/<int:period_id>/symptoms/<int:symptom_id>/delete', endpoint='delete_symptom')
 api.add_resource(Logout, '/logout', endpoint='logout')
+
+############ PRACTICE ############
+api.add_resource(FrequentSymptoms, '/most_frequent', endpoint='most_frequent')
+api.add_resource(UserProfile, '/user_profile_<int:user_id>', endpoint='user_profile')
+api.add_resource(UserProfile, '/user_profile_<int:user_id>_delete', endpoint='user_profile_delete')
+api.add_resource(UserProfile, '/user_profile_<int:user_id>_update', endpoint='user_profile_update')
+api.add_resource(MySymptom, '/periods/<int:period_id>/symptoms/<int:symptom_id>', endpoint='symptom')
+api.add_resource(MySymptom, '/periods/<int:period_id>/symptoms/<int:symptom_id>/update', endpoint='symptom_update')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

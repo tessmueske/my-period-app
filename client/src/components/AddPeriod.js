@@ -1,9 +1,21 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
 
 function AddPeriod({ setSelectedPeriod }) {
   const navigate = useNavigate();
+
+  const validationSchema = Yup.object().shape({
+    start_date: Yup.date()
+      .required("start date is required")
+      .nullable(),
+    end_date: Yup.date()
+      .nullable()
+      .when('start_date', (start_date, schema) => {
+        return schema.min(start_date, "end date must be after the start date");
+      })
+  });
 
   const handleSubmit = (values, { setSubmitting, setErrors }) => {
     setSubmitting(true);
@@ -42,6 +54,7 @@ function AddPeriod({ setSelectedPeriod }) {
           end_date: '',
           notes: '',
         }}
+        validationSchema={validationSchema}
         onSubmit={handleSubmit} 
       >
         {({ isSubmitting, errors }) => (

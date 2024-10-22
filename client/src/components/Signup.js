@@ -1,15 +1,25 @@
 import React from "react";
 import { useFormik } from "formik"; 
 import { useNavigate } from "react-router-dom";
+import * as Yup from 'yup';
 
 function Signup({ onSignup }) {
   const navigate = useNavigate();
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("invalid email format")
+      .required("email is required"), 
+    password: Yup.string()
+      .required("password is required")
+  });
 
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
+    validationSchema,
     onSubmit: (values) => {
       handleSignup(values);
     },

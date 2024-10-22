@@ -1,10 +1,20 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
 
 function UpdatePeriod({ selectedPeriod, updateSelectedPeriod }) {
 
     const navigate = useNavigate();
+
+    const validationSchema = Yup.object().shape({
+      start_date: Yup.date()
+        .required("start date is required")
+        .max(Yup.ref('end_date'), "start date must be before end date"), 
+      end_date: Yup.date()
+        .required("end date is required")
+        .min(Yup.ref('start_date'), "end date must be after start date")
+    });
   
     const formik = useFormik({
     initialValues: {
@@ -13,6 +23,7 @@ function UpdatePeriod({ selectedPeriod, updateSelectedPeriod }) {
       notes: selectedPeriod.notes,
       symptoms: selectedPeriod.symptoms || [],
     },
+    validationSchema,
     onSubmit: (values) => {
       fetch(`/periods/${selectedPeriod.id}`, {
         method: 'PUT',

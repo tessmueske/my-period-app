@@ -17,6 +17,12 @@ class User(db.Model, SerializerMixin):
 
     serialize_rules = ('-periods.user',)
 
+    def to_dict(self):
+        return {
+            'id': user.id,
+            'email': user.email
+        }
+
     @hybrid_property
     def password_hash(self):
         raise AttributeError("password is not a readable attribute")
@@ -77,7 +83,6 @@ class PeriodSymptom(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     severity = db.Column(db.Integer)
-    notes = db.Column(db.String)
 
     serialize_rules = ('-period', '-symptom')
 
@@ -85,4 +90,4 @@ class PeriodSymptom(db.Model, SerializerMixin):
     symptom_id = db.Column(db.Integer, db.ForeignKey('symptoms.id'))
 
     period = db.relationship('Period', backref=db.backref('periodsymptoms', cascade="all, delete-orphan"))
-    symptom = db.relationship('Symptom', backref=db.backref('periodsymptoms', cascade="all, delete-orphan"))
+    symptom = db.relationship('Symptom', backref=db.backref('periodsymptoms', cascade="all, delete-orphan", overlaps="periods,symptoms"))

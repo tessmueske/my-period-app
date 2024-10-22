@@ -1,11 +1,20 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
 
 function AddSymptom({ selectedPeriod }) {
   const navigate = useNavigate();
 
-  console.log(selectedPeriod);
+  const validationSchema = Yup.object().shape({
+    name: Yup.string()
+      .required("symptom name is required"),
+    severity: Yup.number()
+      .required("severity is required")
+      .min(1, "severity must be at least 1")
+      .max(5, "severity must be at most 5")
+      .typeError("severity must be a number"),
+  });
 
   const handleSubmit = (values, { setSubmitting, setErrors, resetForm }) => {
     setSubmitting(true);
@@ -43,6 +52,7 @@ function AddSymptom({ selectedPeriod }) {
           name: '',
           severity: '',
         }}
+        validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
         {({ isSubmitting, errors }) => (

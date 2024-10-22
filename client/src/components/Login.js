@@ -1,9 +1,18 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from 'yup';
 
 function Login({ onLogin }) {
   const navigate = useNavigate();
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("invalid email format")
+      .required("email is required"),
+    password: Yup.string()
+      .required("password is required")
+  });
 
   const handleSubmit = (values, { setSubmitting, setErrors }) => {
     fetch("http://localhost:5555/login", {
@@ -45,6 +54,7 @@ function Login({ onLogin }) {
         </div>
         <Formik
           initialValues={{ email: "", password: "" }}
+          validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
           {({ isSubmitting, errors }) => (
