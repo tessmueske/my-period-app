@@ -16,13 +16,7 @@ class User(db.Model, SerializerMixin):
     periods = db.relationship('Period', back_populates='user')
 
     serialize_rules = ('-periods.user',)
-
-    def to_dict(self):
-        return {
-            'id': user.id,
-            'email': user.email
-        }
-
+    
     @hybrid_property
     def password_hash(self):
         raise AttributeError("password is not a readable attribute")

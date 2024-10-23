@@ -32,13 +32,11 @@ function App() {
   }, []);
 
   const handleLogout = () => {
-    console.log("Attempting to log out...");
     fetch("http://localhost:5555/logout", { 
       method: "DELETE",
       credentials: "include"
     })
     .then((response) => {
-      console.log("Response status:", response.status);
       if (response.status === 204) {
         setUser(null);
         navigate("/");
