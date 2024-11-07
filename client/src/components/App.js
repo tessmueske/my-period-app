@@ -19,7 +19,6 @@ import '../index.css';
 
 function App() {
   const [user, setUser] = useState(null);
-  const [deleteSymptom, setDeleteSymptom] = useState(null)
   const [selectedPeriod, setSelectedPeriod] = useState(null);
   const navigate = useNavigate();
 
