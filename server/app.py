@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import Flask, request, session, jsonify
+from flask import Flask, request, session, jsonify, render_template
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -359,5 +359,10 @@ api.add_resource(Symptoms, '/periods/<int:period_id>/symptoms', endpoint='sympto
 api.add_resource(Symptoms, '/periods/<int:period_id>/symptoms/<int:symptom_id>/delete', endpoint='delete_symptom')
 api.add_resource(Logout, '/logout', endpoint='logout')
 
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    return render_template("index.html")
+
 if __name__ == '__main__':
-    app.run(port=5555, debug=True)
+    app.run(port=5555, debug=False)
