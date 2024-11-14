@@ -1,8 +1,8 @@
-"""database instantiation
+"""database initialization
 
-Revision ID: e970c5968888
+Revision ID: d4a2880edf18
 Revises: 
-Create Date: 2024-10-13 17:29:35.531450
+Create Date: 2024-11-14 12:15:36.407466
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e970c5968888'
+revision = 'd4a2880edf18'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -44,7 +44,6 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(), nullable=True),
     sa.Column('severity', sa.Integer(), nullable=True),
-    sa.Column('notes', sa.String(), nullable=True),
     sa.Column('period_id', sa.Integer(), nullable=True),
     sa.Column('symptom_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['period_id'], ['periods.id'], name=op.f('fk_periodsymptoms_period_id_periods')),
