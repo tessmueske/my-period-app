@@ -12,7 +12,7 @@ app = Flask(
     template_folder='../client/build'
 )
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://crimson_database_fzx7_user:Mz5XAiZB0e8EDbH3QC2MXfjxszdAnQjk@dpg-csqfvum8ii6s73al1bog-a.oregon-postgres.render.com/crimson_database_fzx7'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://crimson_database_kpxi_user:TUOAuuY8m7pI15Cyr2ktGwA4nCXMjfdG@dpg-ct0amotumphs73f3a8bg-a.oregon-postgres.render.com/crimson_database_kpxi'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 
