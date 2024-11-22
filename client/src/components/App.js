@@ -31,7 +31,7 @@ function App() {
   }, []);
 
   const handleLogout = () => {
-    fetch("http://localhost:5555/logout", { 
+    fetch("/logout", { 
       method: "DELETE",
       credentials: "include"
     })

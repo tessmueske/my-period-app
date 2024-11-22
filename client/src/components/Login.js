@@ -15,7 +15,7 @@ function Login({ onLogin }) {
   });
 
   const handleSubmit = (values, { setSubmitting, setErrors }) => {
-    fetch("http://localhost:5555/login", {
+    fetch("/login", {
       method: "POST",
       credentials: "include",
       headers: {

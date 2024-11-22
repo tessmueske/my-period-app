@@ -26,7 +26,7 @@ function Signup({ onSignup }) {
   });
 
   const handleSignup = ({ email, password }) => {
-    fetch("http://localhost:5555/signup", {
+    fetch("/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +48,7 @@ function Signup({ onSignup }) {
   };
 
   const handleLogin = (email, password) => {
-    fetch("http://localhost:5555/login", {
+    fetch("/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

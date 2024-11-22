@@ -8,7 +8,7 @@ const DeleteSymptom = ({ selectedPeriod }) => {
   useEffect(() => {
     const fetchSymptoms = async () => {
       try {
-        const response = await fetch(`http://localhost:5555/periods/${selectedPeriod.id}/symptoms`);
+        const response = await fetch(`/periods/${selectedPeriod.id}/symptoms`);
         if (!response.ok) {
           throw new Error('Failed to fetch symptoms');
         }
@@ -24,7 +24,7 @@ const DeleteSymptom = ({ selectedPeriod }) => {
 
   const handleDelete = async (periodId, symptomId) => {
     try {
-      const response = await fetch(`http://localhost:5555/periods/${periodId}/symptoms/${symptomId}/delete`, {
+      const response = await fetch(`/periods/${periodId}/symptoms/${symptomId}/delete`, {
         method: 'DELETE',
         credentials: 'include',
       });

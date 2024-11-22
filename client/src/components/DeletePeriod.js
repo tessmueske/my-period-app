@@ -6,7 +6,7 @@ function DeletePeriod({ selectedPeriod, setSelectedPeriod }) {
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const handleDelete = () => {
-    fetch(`http://localhost:5555/periods/${selectedPeriod.id}`, {
+    fetch(`/periods/${selectedPeriod.id}`, {
       method: "DELETE",
       credentials: 'include',
     })

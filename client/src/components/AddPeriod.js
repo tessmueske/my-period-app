@@ -19,7 +19,7 @@ function AddPeriod({ setSelectedPeriod }) {
 
   const handleSubmit = (values, { setSubmitting, setErrors }) => {
     setSubmitting(true);
-    fetch('http://localhost:3000/add_period', {
+    fetch('/add_period', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

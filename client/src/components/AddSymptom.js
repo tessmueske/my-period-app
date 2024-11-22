@@ -18,7 +18,7 @@ function AddSymptom({ selectedPeriod }) {
 
   const handleSubmit = (values, { setSubmitting, setErrors, resetForm }) => {
     setSubmitting(true);
-    fetch('http://localhost:3000/add_symptom', {
+    fetch('/add_symptom', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
