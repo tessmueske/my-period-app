@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import Flask, request, session, jsonify, render_template
+from flask import Flask, request, session, jsonify, send_from_directory
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -346,6 +346,10 @@ class Logout(Resource):
         session.pop('user_id', None)
         return '', 204
 
+class Index(Resource):
+    def get(self):
+        return send_from_directory("../client/build", "index.html")
+
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
@@ -358,11 +362,7 @@ api.add_resource(Symptoms, '/add_symptom', endpoint='add_symptom')
 api.add_resource(Symptoms, '/periods/<int:period_id>/symptoms', endpoint='symptoms')
 api.add_resource(Symptoms, '/periods/<int:period_id>/symptoms/<int:symptom_id>/delete', endpoint='delete_symptom')
 api.add_resource(Logout, '/logout', endpoint='logout')
-
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
-    return render_template("index.html")
+api.add_resource(Index, "/")
 
 if __name__ == '__main__':
     app.run(port=5555, debug=False)
