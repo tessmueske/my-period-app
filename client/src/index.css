@@ -87,9 +87,14 @@ h2 {
 
 .inputContainer {
   display: flex;
-  justify-content: center; 
-  align-items: center;
-  margin-bottom: 10px;
+  flex-direction: column; 
+  margin-bottom: 10px; 
+}
+
+.errorLabel {
+  color: rgb(247, 163, 163);
+  font-size: 0.875rem;
+  margin-top: 5px;  
 }
 
 .periodButton {

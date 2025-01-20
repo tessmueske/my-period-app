@@ -50,7 +50,7 @@ function Login({ onLogin }) {
     <div className="centered-container">
       <div className="mainContainer">
         <div className="titleContainer">
-          <div>log in to Crimson</div>
+          <div><h2>log in to Crimson</h2></div>
         </div>
         <Formik
           initialValues={{ email: "", password: "" }}
@@ -59,6 +59,7 @@ function Login({ onLogin }) {
         >
           {({ isSubmitting, errors }) => (
             <Form>
+              <p>email:</p>
               <div className="inputContainer">
                 <Field
                   type="email"
@@ -70,7 +71,7 @@ function Login({ onLogin }) {
               </div>
 
               <br />
-
+              <p>password:</p>
               <div className="inputContainer">
                 <Field
                   type="password"
@@ -78,6 +79,7 @@ function Login({ onLogin }) {
                   placeholder="password"
                   className="inputBox"
                 />
+                <br></br>
                 <ErrorMessage name="password" component="div" className="errorLabel" />
               </div>
 
@@ -85,7 +87,7 @@ function Login({ onLogin }) {
 
               <div className="inputContainer">
                 <button type="submit" className="button" disabled={isSubmitting}>
-                  {isSubmitting ? "Logging in..." : "log in"}
+                  {isSubmitting ? "logging in..." : "log in"}
                 </button>
               </div>
 

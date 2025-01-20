@@ -75,6 +75,7 @@ function Signup({ onSignup }) {
     <div className="centered-container">
       <h2>sign up for crimson</h2>
       <br />
+      <p>email:</p>
       <form onSubmit={formik.handleSubmit}>
         <input
           type="email"
@@ -86,6 +87,7 @@ function Signup({ onSignup }) {
         />
         <br />
         <br />
+        <p>password:</p>
         <input
           type="password"
           name="password" 
